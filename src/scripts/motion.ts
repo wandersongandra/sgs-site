@@ -61,6 +61,13 @@ function initNav() {
       toggle?.focus();
     }
   });
+
+  const desktopNav = window.matchMedia('(min-width: 721px)');
+  const closeMenuOnDesktop = () => {
+    if (desktopNav.matches) setOpen(false);
+  };
+  desktopNav.addEventListener('change', closeMenuOnDesktop);
+  window.addEventListener('resize', closeMenuOnDesktop, { passive: true });
 }
 
 function initNavCurrent() {
@@ -265,6 +272,8 @@ function settleHeroReduced() {
   });
   const chip = document.querySelector<HTMLElement>('[data-sync-chip]');
   if (chip) gsap.set(chip, { autoAlpha: 1, y: 0 });
+  const kpi = document.querySelector<HTMLElement>('[data-kpi]');
+  if (kpi) kpi.textContent = '92%';
   const path = document.querySelector<SVGPathElement>('[data-hero-path]');
   if (path) path.style.strokeDashoffset = '0';
 }
@@ -527,6 +536,12 @@ function initJourney(reduce: boolean) {
       const on = i === index;
       el.classList.toggle('is-active', on);
       el.querySelector('[data-journey-frame]')?.classList.toggle('is-active', on);
+    });
+    document.querySelectorAll<HTMLAnchorElement>('[data-journey-jump]').forEach((a, i) => {
+      const on = i === index;
+      a.classList.toggle('is-current', on);
+      if (on) a.setAttribute('aria-current', 'step');
+      else a.removeAttribute('aria-current');
     });
   };
 

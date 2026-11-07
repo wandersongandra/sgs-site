@@ -7,8 +7,19 @@ import { journeySteps } from '../data/content';
     <div class="section-head">
       <p class="eyebrow">Do campo ao painel</p>
       <h2 id="jornada-title">Uma história simples: registrar, assinar, evidenciar e acompanhar.</h2>
-      <p>Role para ver o caminho que o registro faz dentro do SGS.</p>
+      <p>O mesmo checklist de exemplo, do celular ao painel. Dá para ler as quatro etapas ou ir direto a uma delas.</p>
     </div>
+
+    <nav class="journey-jumps" aria-label="Etapas do registro de exemplo">
+      {
+        journeySteps.map((step) => (
+          <a class="journey-jump" href={`#etapa-${step.n}`} data-journey-jump>
+            <span>{step.n}</span>
+            {step.title}
+          </a>
+        ))
+      }
+    </nav>
 
     <div class="journey-layout" data-journey-layout>
       <div class="journey-steps" data-journey-steps>
@@ -18,7 +29,7 @@ import { journeySteps } from '../data/content';
         </svg>
         {
           journeySteps.map((step, i) => (
-            <article class:list={['journey-step', i === 0 && 'is-active']} data-journey-step={i}>
+            <article class:list={['journey-step', i === 0 && 'is-active']} id={`etapa-${step.n}`} data-journey-step={i}>
               <div class="journey-copy">
                 <div class="n">{step.n}</div>
                 <h3>{step.title}</h3>
@@ -43,7 +54,7 @@ import { journeySteps } from '../data/content';
                 )}
                 {i === 1 && (
                   <div class="jf-card">
-                    <div class="jf-card-head">Aprovação e assinatura</div>
+                    <div class="jf-card-head">Checklist EPI · aprovação</div>
                     <div class="jf-sig-row">
                       <div>
                         <strong>Responsável técnico</strong>
@@ -67,14 +78,14 @@ import { journeySteps } from '../data/content';
                   <div class="jf-doc">
                     <div class="jf-doc-bar">
                       <span></span><span></span><span></span>
-                      <em>evidencia-pt-frente-a.pdf</em>
+                      <em>checklist-epi-frente-a.pdf</em>
                     </div>
                     <div class="jf-doc-body">
-                      <div class="jf-doc-title">Permissão de Trabalho</div>
+                      <div class="jf-doc-title">Checklist EPI · Frente A</div>
                       <div class="jf-doc-line w80"></div>
                       <div class="jf-doc-line w60"></div>
                       <div class="jf-doc-line w90"></div>
-                      <div class="jf-doc-stamp">PDF · v3 · Pronto</div>
+                      <div class="jf-doc-stamp">PDF de exemplo · no acervo</div>
                       <div class="jf-doc-badges">
                         <span class="status status-ok">Verificação pública</span>
                         <span class="status status-ok">Assinado</span>
@@ -84,12 +95,13 @@ import { journeySteps } from '../data/content';
                 )}
                 {i === 3 && (
                   <div class="jf-chart-card">
-                    <div class="jf-card-head">Indicadores do período</div>
+                    <div class="jf-card-head">Exemplo · painel do período</div>
                     <div class="jf-kpis">
-                      <div><strong>96%</strong><span>Checklists em dia</span></div>
-                      <div><strong>4</strong><span>APRs abertas</span></div>
-                      <div><strong>2</strong><span>NCs em tratativa</span></div>
+                      <div><strong>1</strong><span>Checklist no painel</span></div>
+                      <div><strong>1</strong><span>Aprovação pendente</span></div>
+                      <div><strong>1</strong><span>Evidência no acervo</span></div>
                     </div>
+                    <p class="jf-note">Números deste exemplo. Não são medição de um cliente.</p>
                     <div class="jf-bars">
                       <span style="--h:72%"></span>
                       <span style="--h:88%"></span>
@@ -106,6 +118,6 @@ import { journeySteps } from '../data/content';
         }
       </div>
     </div>
-    <p class="mock-caption mock-caption-journey">As telas desta seção são exemplos ilustrativos de interface, não resultados de clientes.</p>
+    <p class="mock-caption mock-caption-journey">Desenhos de exemplo. Não são capturas do sistema nem resultados de clientes.</p>
   </div>
 </section>

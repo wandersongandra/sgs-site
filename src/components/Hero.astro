@@ -1,6 +1,13 @@
 ---
-import { site, whatsappUrl } from '../config';
+import { whatsappUrl } from '../config';
 import WaIcon from './WaIcon.astro';
+
+const path = [
+  { n: '01', title: 'Registra no celular' },
+  { n: '02', title: 'Assina e aprova' },
+  { n: '03', title: 'Vira evidência' },
+  { n: '04', title: 'Aparece no painel' },
+];
 ---
 
 <section class="hero hero-dark" id="topo" data-hero aria-labelledby="hero-title">
@@ -17,22 +24,35 @@ import WaIcon from './WaIcon.astro';
         <span class="hero-line">ao painel de conformidade.</span>
       </h1>
       <p class="lede lede-on-dark">
-        O SGS organiza análise de risco, permissão de trabalho, checklists, documentos,
-        treinamentos e indicadores em um só lugar — para quem está na obra e para quem decide no escritório.
+        O técnico registra checklist, APR ou PT no celular. O SGS leva esse registro para aprovação,
+        para o acervo e para o painel de quem acompanha a operação.
       </p>
+      <ol class="story-rail">
+        {
+          path.map((step) => (
+            <li>
+              <span>{step.n}</span>
+              {step.title}
+            </li>
+          ))
+        }
+      </ol>
       <div class="hero-actions">
         <a class="btn btn-light" data-magnetic href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
           <WaIcon />
           Falar no WhatsApp
         </a>
-        <a class="btn btn-ghost-on-dark" href="#modulos">Ver módulos</a>
       </div>
+      <p class="hero-follow">
+        <a class="text-link-on-dark" href="#jornada">Acompanhar um registro de exemplo</a>
+      </p>
       <div class="hero-meta" aria-label="Destaques">
         <span class="pill pill-on-dark">Funciona no celular</span>
         <span class="pill pill-on-dark">Offline em APR, PT, checklists e não conformidades</span>
-        <span class="pill pill-on-dark">{site.plansLabel}</span>
       </div>
-      <p class="mock-caption mock-caption-hero">A ilustração é um exemplo de interface, não um resultado de cliente.</p>
+      <p class="mock-caption mock-caption-hero">
+        Ilustração de exemplo. Não é uma captura do sistema nem um resultado de cliente.
+      </p>
     </div>
 
     <div class="hero-stage" data-hero-stage data-tilt-root aria-hidden="true">
@@ -50,7 +70,7 @@ import WaIcon from './WaIcon.astro';
           <span class="dash-dot"></span>
           <span class="dash-dot"></span>
           <span class="dash-dot"></span>
-          <span class="dash-url">app.sgsseguranca.com.br</span>
+          <span class="dash-url">exemplo · painel</span>
         </div>
         <div class="dash-body">
           <aside class="dash-nav">
@@ -64,8 +84,8 @@ import WaIcon from './WaIcon.astro';
           <div class="dash-main">
             <div class="dash-top">
               <div class="dash-kpi">
-                <strong data-kpi>92%</strong>
-                <span>Conformidade do período</span>
+                <strong data-kpi>80%</strong>
+                <span>Conformidade · exemplo</span>
               </div>
               <div class="dash-chart">
                 <div class="label">Pendências por dia</div>
@@ -103,6 +123,7 @@ import WaIcon from './WaIcon.astro';
       <div class="phone phone-lg" data-phone data-tilt-layer="0.7">
         <div class="phone-notch"></div>
         <div class="phone-screen">
+          <p class="stage-tag">Exemplo · campo</p>
           <h4>Checklist de campo</h4>
           <div class="phone-item" data-phone-item="0">
             <span class="phone-check">✓</span>

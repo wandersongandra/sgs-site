@@ -2,18 +2,18 @@
 import { audiences } from '../data/content';
 ---
 
-<section class="section" style="padding-top: 0;" aria-labelledby="publico-title">
+<section class="section section-follow" aria-labelledby="publico-title">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Para quem é</p>
-      <h2 id="publico-title" style="text-wrap:balance; max-width:18ch;">Do técnico na planta ao gestor no painel.</h2>
+      <h2 id="publico-title">Do técnico na planta ao gestor no painel.</h2>
     </div>
     <div class="audience-grid">
       {
         audiences.map((a) => (
-          <article class="card" data-spotlight>
+          <article class="card audience-card" data-spotlight>
             <h3>{a.title}</h3>
-            <p style="margin: 0.45rem 0 0; color: var(--ink-muted); font-size: 0.92rem;">{a.text}</p>
+            <p>{a.text}</p>
           </article>
         ))
       }

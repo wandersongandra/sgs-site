@@ -28,10 +28,10 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
     { title: 'Importação assistida', status: 'Pronta', tone: 'sync' },
   ],
   relatorios: [
-    { title: 'Conformidade', status: '96%', tone: 'ok' },
-    { title: 'Relatório fotográfico', status: '12 fotos', tone: 'sync' },
+    { title: 'Conformidade', status: 'No painel', tone: 'ok' },
+    { title: 'Relatório fotográfico', status: 'Com fotos', tone: 'sync' },
     { title: 'RDO · Ontem', status: 'Enviado', tone: 'ok' },
-    { title: 'Pendências abertas', status: '4', tone: 'warn' },
+    { title: 'Pendências abertas', status: 'Em aberto', tone: 'warn' },
   ],
 };
 ---
@@ -77,7 +77,7 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
           <div class="mod-mock">
             <div class="label">{group.mockLabel}</div>
             <h3>{group.title}</h3>
-            <p style="margin:0 0 1rem; opacity:0.85;">{group.lead}</p>
+            <p class="mod-lead">{group.lead}</p>
             <div class="mod-mock-list">
               {(mockRows[group.id] || []).map((row) => (
                 <div class="mod-mock-row">
@@ -86,6 +86,7 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
                 </div>
               ))}
             </div>
+            <p class="mod-example">Exemplo de lista. Não é uma tela do sistema.</p>
           </div>
           <div class="mod-bento" data-cols={group.items.length === 6 ? '3' : '2'}>
             {group.items.map((item) => (

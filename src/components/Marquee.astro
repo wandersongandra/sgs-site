@@ -1,0 +1,31 @@
+---
+const items = [
+  'APR',
+  'PT',
+  'Checklists',
+  'DDS',
+  'Documentos',
+  'Assinaturas',
+  'Treinamentos',
+  'EPI',
+  'Auditorias',
+  'Indicadores',
+  'Sophie IA',
+  'Campo',
+];
+const row = [...items, ...items];
+---
+
+<section class="marquee-band" aria-hidden="true" data-marquee-band>
+  <div class="marquee marquee-outline" data-marquee>
+    <div class="marquee-track">
+      {
+        row.map((item, i) => (
+          <span class:list={['marquee-item', i % 2 === 0 ? 'is-outline' : 'is-fill']}>
+            {item}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>

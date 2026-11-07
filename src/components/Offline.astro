@@ -1,0 +1,31 @@
+---
+import { offlineCaps } from '../data/content';
+---
+
+<section class="section" id="campo" aria-labelledby="offline-title">
+  <div class="container split">
+    <div>
+      <p class="eyebrow">Uso em campo</p>
+      <h2 id="offline-title">Funciona no celular, mesmo sem internet.</h2>
+      <p class="lede">
+        Nos módulos preparados, o técnico continua registrando. Quando a rede volta, o SGS sincroniza.
+        Offline vale para APR, PT, checklists e não conformidades.
+      </p>
+    </div>
+    <ul class="checklist">
+      {
+        offlineCaps.map((c) => (
+          <li>
+            <span class="mark mark-draw" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path data-check-draw d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <strong style="color: var(--blue-deep);">{c.name}</strong>
+              <div style="color: var(--ink-muted); font-size: 0.92rem;">{c.status}</div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+---
+interface Props {
+  name: string;
+}
+const { name } = Astro.props;
+
+const paths: Record<string, string> = {
+  shield: 'M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z M9.5 12l1.8 1.8L15 10',
+  permit: 'M5 3h14v18H5z M8 8h8 M8 12h8 M8 16h5',
+  alert: 'M12 4l9 16H3L12 4z M12 10v4 M12 17h.01',
+  chat: 'M5 6h14v9H8l-3 3V6z M8 10h8 M8 13h5',
+  sunrise: 'M4 18h16 M6 15a6 6 0 0112 0 M12 5v3 M5 10l2 2 M19 10l-2 2',
+  check: 'M4 4h16v16H4z M8 12l2.5 2.5L16 9',
+  flag: 'M6 4v16 M6 5h10l-2 3 2 3H6',
+  search: 'M11 5a6 6 0 110 12 6 6 0 010-12z M16 16l4 4',
+  wrench: 'M14.5 6.5a4 4 0 00-5.7 5.7L4 17v3h3l4.8-4.8a4 4 0 002.7-7.7z',
+  med: 'M4 4h16v16H4z M12 8v8 M8 12h8',
+  book: 'M5 5h11a3 3 0 013 3v11H8a3 3 0 00-3 3V5z',
+  heart: 'M12 20s-7-4.4-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.6-7 10-7 10z',
+  hardhat: 'M4 14h16v2H4z M6 14a6 6 0 0112 0 M12 5v3',
+  cal: 'M4 5h16v15H4z M8 3v4 M16 3v4 M4 10h16',
+  folder: 'M3 8h6l2 2h10v9a2 2 0 01-2 2H5a2 2 0 01-2-2V8z',
+  pen: 'M4 20l4.2-1.1L19 8.1 15.9 5 5.1 15.8 4 20z',
+  badge: 'M12 5a5 5 0 110 10 5 5 0 010-10z M8.5 14.5L7 21l5-2 5 2-1.5-6.5',
+  upload: 'M12 16V5 M8 9l4-4 4 4 M5 19h14',
+  report: 'M7 3h7l5 5v13H7V3z M14 3v5h5 M9 13h6 M9 17h4',
+  camera: 'M4 8h3l2-2h6l2 2h3v11H4V8z M12 13a3.5 3.5 0 100-7 3.5 3.5 0 000 7z',
+  clipboard: 'M6 5h12v16H6z M9 5V4h6v1 M9 11h6 M9 15h4',
+  chart: 'M4 19h16 M7 16V9 M12 16V5 M17 16v-5',
+};
+
+const d = paths[name] ?? paths.check;
+const parts = d.split(/\s(?=M)/);
+---
+
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {parts.map((p) => <path d={p} />)}
+</svg>

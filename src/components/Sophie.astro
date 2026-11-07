@@ -1,0 +1,45 @@
+---
+import { sophieTasks, sophieChat } from '../data/content';
+---
+
+<section class="section section-soft" id="sophie" aria-labelledby="sophie-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Sophie IA</p>
+      <h2 id="sophie-title">Uma assistente que fala a língua da segurança do trabalho.</h2>
+      <p>
+        Análise e apoio com dados da sua empresa, com controle de acesso e cuidado com informações sensíveis.
+      </p>
+    </div>
+
+    <div class="sophie-grid">
+      <div class="sophie-intro">
+        <img src="/sophie-avatar.svg" alt="" width="72" height="72" />
+        <div>
+          <h3 style="font-size:1.35rem; margin-bottom:0.4rem;">Sophie</h3>
+          <p style="margin:0; color: var(--ink-muted);">
+            Exemplos ilustrativos do tipo de ajuda que ela oferece no sistema.
+          </p>
+          <div class="tag-cloud" aria-label="Capacidades da Sophie">
+            {sophieTasks.map((t) => <span class="pill">{t}</span>)}
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="chat"
+        data-sophie-chat
+        data-chat={JSON.stringify(sophieChat)}
+        aria-label="Demonstração ilustrativa de conversa"
+      >
+        {
+          sophieChat.map((m, i) => (
+            <div class={`chat-bubble ${m.role} is-in`} data-chat-bubble={i} data-full={m.text}>
+              {m.text}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

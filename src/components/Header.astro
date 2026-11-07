@@ -1,0 +1,37 @@
+---
+import { whatsappUrl } from '../config';
+import WaIcon from './WaIcon.astro';
+---
+
+<header class="site-header header-over-hero" data-header>
+  <div class="container nav">
+    <a class="brand" href="#topo" aria-label="SGS Segurança — início">
+      <img src="/logo-sgs-mark.svg" alt="" width="38" height="38" />
+      <span>SGS Segurança</span>
+    </a>
+    <button
+      class="nav-toggle"
+      type="button"
+      data-nav-toggle
+      aria-expanded="false"
+      aria-controls="menu-principal"
+      aria-label="Abrir menu"
+    >
+      <span></span>
+    </button>
+    <ul class="nav-links" id="menu-principal" data-nav-links>
+      <li><a href="#produto" data-nav-link>Produto</a></li>
+      <li><a href="#modulos" data-nav-link>Módulos</a></li>
+      <li><a href="#jornada" data-nav-link>Jornada</a></li>
+      <li><a href="#sophie" data-nav-link>Sophie IA</a></li>
+      <li><a href="#seguranca" data-nav-link>Segurança</a></li>
+      <li><a href="#faq" data-nav-link>FAQ</a></li>
+      <li>
+        <a class="btn btn-primary" data-magnetic href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+          <WaIcon />
+          <span style="color:#fff">WhatsApp</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WaIcon from '../components/WaIcon.astro';
+import { site, whatsappUrl } from '../config';
+---
+<BaseLayout title="Página não encontrada | SGS Segurança" description="A página que você procurou não existe." noindex path="/404">
+  <main id="conteudo">
+    <section class="cta-bleed" aria-labelledby="nf-title" style="min-height:100vh;display:grid;align-items:center;">
+      <div class="cta-bleed-bg" aria-hidden="true"></div>
+      <div class="container cta-bleed-inner">
+        <a class="brand" href="/" style="justify-content:center;margin-bottom:2rem;color:#fff;">
+          <img src="/logo-sgs-mark.svg" alt="" width="38" height="38" />
+          <span>{site.name}</span>
+        </a>
+        <p class="eyebrow eyebrow-on-dark">Erro 404</p>
+        <h1 id="nf-title" class="display-cta">Página não encontrada.</h1>
+        <p class="cta-lede">O endereço pode ter mudado ou estar incorreto.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light btn-xl" href="/">Voltar ao início</a>
+          <a class="btn btn-ghost-on-dark" href={whatsappUrl()} target="_blank" rel="noopener noreferrer"><WaIcon />Falar no WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

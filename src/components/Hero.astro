@@ -1,0 +1,127 @@
+---
+import { site, whatsappUrl } from '../config';
+import WaIcon from './WaIcon.astro';
+---
+
+<section class="hero hero-dark" id="topo" data-hero aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-mesh"></div>
+    <div class="hero-grid-lines"></div>
+  </div>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow eyebrow-on-dark">Segurança e Saúde do Trabalho</p>
+      <h1 id="hero-title" class="display-hero" data-split-hero>
+        <span class="hero-line">Do checklist no celular</span>
+        <span class="hero-line">ao painel de conformidade.</span>
+      </h1>
+      <p class="lede lede-on-dark">
+        O SGS organiza análise de risco, permissão de trabalho, checklists, documentos,
+        treinamentos e indicadores em um só lugar — para quem está na obra e para quem decide no escritório.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-light" data-magnetic href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+          <WaIcon />
+          Falar no WhatsApp
+        </a>
+        <a class="btn btn-ghost-on-dark" href="#modulos">Ver módulos</a>
+      </div>
+      <div class="hero-meta" aria-label="Destaques">
+        <span class="pill pill-on-dark">Funciona no celular</span>
+        <span class="pill pill-on-dark">Offline em APR, PT, checklists e não conformidades</span>
+        <span class="pill pill-on-dark">{site.plansLabel}</span>
+      </div>
+      <p class="mock-caption mock-caption-hero">A ilustração é um exemplo de interface, não um resultado de cliente.</p>
+    </div>
+
+    <div class="hero-stage" data-hero-stage data-tilt-root aria-hidden="true">
+      <svg class="hero-thread" data-hero-thread aria-hidden="true">
+        <path data-hero-path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+        <circle data-hero-bead cx="-40" cy="-40" r="4.5" fill="currentColor" />
+      </svg>
+      <div class="float-chip float-a" data-float-chip data-tilt-layer="1.1">Concluído</div>
+      <div class="float-chip float-b" data-float-chip data-tilt-layer="0.95">Em análise</div>
+      <div class="float-chip float-c" data-float-chip data-tilt-layer="1.05">Assinou</div>
+      <div class="sync-chip" data-sync-chip data-tilt-layer="0.9">Sincronizado</div>
+
+      <div class="dash dash-lg" data-dash data-tilt-layer="0.35">
+        <div class="dash-chrome">
+          <span class="dash-dot"></span>
+          <span class="dash-dot"></span>
+          <span class="dash-dot"></span>
+          <span class="dash-url">app.sgsseguranca.com.br</span>
+        </div>
+        <div class="dash-body">
+          <aside class="dash-nav">
+            <div class="nav-item is-active">Painel</div>
+            <div class="nav-item">APR</div>
+            <div class="nav-item">PT</div>
+            <div class="nav-item">Checklists</div>
+            <div class="nav-item">Documentos</div>
+            <div class="nav-item">Indicadores</div>
+          </aside>
+          <div class="dash-main">
+            <div class="dash-top">
+              <div class="dash-kpi">
+                <strong data-kpi>92%</strong>
+                <span>Conformidade do período</span>
+              </div>
+              <div class="dash-chart">
+                <div class="label">Pendências por dia</div>
+                <div class="chart-bars" data-chart>
+                  <span style="--h:42%"></span>
+                  <span style="--h:68%"></span>
+                  <span style="--h:54%"></span>
+                  <span style="--h:80%"></span>
+                  <span style="--h:36%"></span>
+                </div>
+              </div>
+            </div>
+            <div class="dash-list" data-dash-list>
+              <div class="dash-item" data-dash-item="0">
+                <span class="title">Checklist EPI</span>
+                <span class="status status-sync" data-status>Aguardando</span>
+              </div>
+              <div class="dash-item" data-dash-item="1">
+                <span class="title">APR · Altura</span>
+                <span class="status status-sync" data-status>Aguardando</span>
+              </div>
+              <div class="dash-item" data-dash-item="2">
+                <span class="title">PT · Confinado</span>
+                <span class="status status-warn" data-status>Em análise</span>
+              </div>
+              <div class="dash-item" data-dash-item="3">
+                <span class="title">DDS · Manhã</span>
+                <span class="status status-ok" data-status>Publicado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone phone-lg" data-phone data-tilt-layer="0.7">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <h4>Checklist de campo</h4>
+          <div class="phone-item" data-phone-item="0">
+            <span class="phone-check">✓</span>
+            <span>Capacete e óculos</span>
+          </div>
+          <div class="phone-item" data-phone-item="1">
+            <span class="phone-check">✓</span>
+            <span>Luva e calçado</span>
+          </div>
+          <div class="phone-item" data-phone-item="2">
+            <span class="phone-check">✓</span>
+            <span>Área sinalizada</span>
+          </div>
+          <div class="phone-item" data-phone-item="3">
+            <span class="phone-check">✓</span>
+            <span>Foto da evidência</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

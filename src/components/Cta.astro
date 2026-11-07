@@ -1,0 +1,26 @@
+---
+import { site, whatsappUrl } from '../config';
+import WaIcon from './WaIcon.astro';
+---
+
+<section class="cta-bleed" id="contato" aria-labelledby="cta-title" data-cta>
+  <div class="cta-bleed-bg" aria-hidden="true"></div>
+  <div class="container cta-bleed-inner">
+    <p class="eyebrow eyebrow-on-dark">Próximo passo</p>
+    <h2 id="cta-title" class="display-cta">
+      Quer conhecer o SGS<br />na sua operação?
+    </h2>
+    <p class="cta-lede">
+      Fale conosco no WhatsApp {site.whatsappDisplay}. {site.plansLabel}.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-light btn-xl" data-magnetic href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+        <WaIcon />
+        Abrir WhatsApp
+      </a>
+      <a class="btn btn-ghost-on-dark" href={site.appLoginUrl} target="_blank" rel="noopener noreferrer">
+        Já sou cliente
+      </a>
+    </div>
+  </div>
+</section>

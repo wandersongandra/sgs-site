@@ -1,0 +1,57 @@
+---
+import { securityPoints } from '../data/content';
+---
+
+<section class="section security-section" id="seguranca" aria-labelledby="seguranca-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Confiança</p>
+      <h2 id="seguranca-title">Segurança e privacidade no desenho do produto.</h2>
+      <p>
+        Contatos do produto: suporte@sgsseguranca.com.br e privacidade@sgsseguranca.com.br /
+        dpo@sgsseguranca.com.br.
+      </p>
+    </div>
+
+    <div class="security-stage" data-security-stage>
+      {
+        securityPoints.slice(0, 2).map((s, i) => (
+          <article class={`sec-card sec-${i}`} data-spotlight>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </article>
+        ))
+      }
+
+      <div class="shield-wrap" aria-hidden="true">
+        <svg class="shield-svg" viewBox="0 0 200 220" fill="none" data-shield>
+          <path
+            class="shield-outline"
+            d="M100 18 L172 48 V108 C172 156 140 190 100 206 C60 190 28 156 28 108 V48 Z"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linejoin="round"
+          />
+          <path
+            class="shield-lock"
+            d="M86 108 V96 C86 88 92 82 100 82 C108 82 114 88 114 96 V108"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <rect class="shield-lock-body" x="78" y="108" width="44" height="34" rx="6" stroke="currentColor" stroke-width="3" />
+          <path class="shield-check" d="M88 124 L96 132 L114 112" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      {
+        securityPoints.slice(2).map((s, i) => (
+          <article class={`sec-card sec-${i + 2}`} data-spotlight>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -3,10 +3,10 @@ import { whatsappUrl } from '../config';
 import WaIcon from './WaIcon.astro';
 ---
 
-<header class="site-header header-over-hero" data-header>
+<header class="site-header" data-header>
   <div class="container nav">
     <a class="brand" href="#topo" aria-label="SGS Segurança — início">
-      <img src="/logo-sgs-mark.svg" alt="" width="38" height="38" />
+      <img src="/logo-sgs-mark.svg" alt="" width="34" height="34" />
       <span>SGS Segurança</span>
     </a>
     <button
@@ -27,9 +27,9 @@ import WaIcon from './WaIcon.astro';
       <li><a href="#seguranca" data-nav-link>Segurança</a></li>
       <li><a href="#faq" data-nav-link>FAQ</a></li>
       <li>
-        <a class="btn btn-primary" data-magnetic href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+        <a class="btn-nav" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
           <WaIcon />
-          <span style="color:#fff">WhatsApp</span>
+          WhatsApp
         </a>
       </li>
     </ul>

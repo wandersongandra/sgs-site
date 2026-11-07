@@ -2,44 +2,31 @@
 import { sophieTasks, sophieChat } from '../data/content';
 ---
 
-<section class="section section-soft" id="sophie" aria-labelledby="sophie-title">
-  <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Sophie IA</p>
-      <h2 id="sophie-title">Uma assistente que fala a língua da segurança do trabalho.</h2>
-      <p>
-        Análise e apoio com dados da sua empresa, com controle de acesso e cuidado com informações sensíveis.
+<section class="block sophie-block" id="sophie" aria-labelledby="sophie-title">
+  <div class="container sophie-layout">
+    <div>
+      <p class="kicker kicker-ink">Sophie IA</p>
+      <h2 id="sophie-title">Assistência dentro do sistema, com o vocabulário da operação.</h2>
+      <p class="lede-quiet">
+        Ela ajuda a analisar APR e PT, sugerir DDS, ler checklists e conversar com dados da empresa, com controle de acesso.
+        O diálogo abaixo é um exemplo, não um atendimento real.
       </p>
+      <ul class="task-list" aria-label="Capacidades da Sophie">
+        {sophieTasks.map((t) => <li>{t}</li>)}
+      </ul>
     </div>
-
-    <div class="sophie-grid">
-      <div class="sophie-intro">
-        <img src="/sophie-avatar.svg" alt="" width="72" height="72" />
-        <div>
-          <h3 style="font-size:1.35rem; margin-bottom:0.4rem;">Sophie</h3>
-          <p style="margin:0; color: var(--ink-muted);">
-            Exemplos ilustrativos do tipo de ajuda que ela oferece no sistema.
+    <div class="transcript" data-sophie-chat aria-label="Demonstração ilustrativa de conversa">
+      <p class="transcript-label">
+        <img src="/sophie-avatar.svg" alt="" width="36" height="36" />
+        Exemplo de conversa
+      </p>
+      {
+        sophieChat.map((m, i) => (
+          <p class:list={['transcript-line', m.role, 'is-in']} data-chat-bubble={i} data-full={m.text}>
+            {m.text}
           </p>
-          <div class="tag-cloud" aria-label="Capacidades da Sophie">
-            {sophieTasks.map((t) => <span class="pill">{t}</span>)}
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="chat"
-        data-sophie-chat
-        data-chat={JSON.stringify(sophieChat)}
-        aria-label="Demonstração ilustrativa de conversa"
-      >
-        {
-          sophieChat.map((m, i) => (
-            <div class={`chat-bubble ${m.role} is-in`} data-chat-bubble={i} data-full={m.text}>
-              {m.text}
-            </div>
-          ))
-        }
-      </div>
+        ))
+      }
     </div>
   </div>
 </section>

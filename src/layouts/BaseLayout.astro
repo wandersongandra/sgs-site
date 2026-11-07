@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/plus-jakarta-sans/wght.css';
 import '../styles/global.css';
+import '../styles/edition.css';
 import { site } from '../config';
 import Preloader from '../components/Preloader.astro';
 import fontLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
@@ -96,9 +97,9 @@ const jsonLd = {
       } catch (e) {}
     </script>
   </head>
-  <body>
+  <body class="edition">
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-    <div class="motion-control">
+    <div class="motion-control" role="region" aria-label="Controle de movimento">
       <label class="motion-pause-label">
         <input type="checkbox" id="pausar-movimento" class="motion-pause-input" data-motion-toggle />
         <span class="motion-pause-icon" aria-hidden="true"></span>

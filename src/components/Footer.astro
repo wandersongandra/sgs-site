@@ -2,31 +2,21 @@
 import { site, whatsappUrl } from '../config';
 ---
 
-<footer class="site-footer footer-v4">
+<footer class="site-footer colophon">
   <div class="container footer-grid">
     <div>
       <a class="brand" href="#topo">
-        <img src="/logo-sgs-mark.svg" alt="" width="36" height="36" />
+        <img src="/logo-sgs-mark.svg" alt="" width="32" height="32" />
         <span>{site.name}</span>
       </a>
-      <p>
-        Sistema de gestão de Segurança e Saúde do Trabalho para operação, conformidade e evidências.
-      </p>
+      <p>Sistema de gestão de Segurança e Saúde do Trabalho para operação, conformidade e evidências.</p>
     </div>
     <div>
       <strong>Contato</strong>
       <ul>
-        <li>
-          <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
-            WhatsApp {site.whatsappDisplay}
-          </a>
-        </li>
-        <li>
-          <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>
-        </li>
-        <li>
-          <a href={site.appLoginUrl} target="_blank" rel="noopener noreferrer">Acessar o sistema</a>
-        </li>
+        <li><a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">WhatsApp {site.whatsappDisplay}</a></li>
+        <li><a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></li>
+        <li><a href={site.appLoginUrl} target="_blank" rel="noopener noreferrer">Acessar o sistema</a></li>
       </ul>
     </div>
     <div>
@@ -38,12 +28,7 @@ import { site, whatsappUrl } from '../config';
       </ul>
     </div>
   </div>
-  <div class="container footer-wordmark" data-footer-wordmark aria-hidden="true">
-    <span>SGS</span>
-  </div>
   <div class="container legal-note">
-    <p>
-      © {new Date().getFullYear()} {site.name}.
-    </p>
+    <p>© {new Date().getFullYear()} {site.name}.</p>
   </div>
 </footer>

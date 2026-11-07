@@ -2,110 +2,69 @@
 import { journeySteps } from '../data/content';
 ---
 
-<section class="section section-dark journey" id="jornada" aria-labelledby="jornada-title" data-journey>
-  <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Do campo ao painel</p>
-      <h2 id="jornada-title">Uma história simples: registrar, assinar, evidenciar e acompanhar.</h2>
-      <p>Role para ver o caminho que o registro faz dentro do SGS.</p>
-    </div>
+<section class="book" id="jornada" aria-labelledby="jornada-title" data-journey>
+  <div class="container book-intro">
+    <p class="kicker kicker-ink">Do campo ao painel</p>
+    <h2 id="jornada-title">Um checklist, lido de ponta a ponta.</h2>
+    <p>As quatro etapas ficam na página. O fio só acompanha a leitura. Os desenhos são exemplo, não captura do sistema.</p>
+  </div>
 
-    <div class="journey-layout" data-journey-layout>
-      <div class="journey-steps" data-journey-steps>
-        <svg class="journey-thread" data-journey-thread viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <path data-journey-path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          <circle data-journey-bead cx="-40" cy="-40" r="5" fill="currentColor" />
-        </svg>
-        {
-          journeySteps.map((step, i) => (
-            <article class:list={['journey-step', i === 0 && 'is-active']} data-journey-step={i}>
-              <div class="journey-copy">
-                <div class="n">{step.n}</div>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </div>
-              <div class:list={['journey-frame', i === 0 && 'is-active']} data-journey-frame={i} aria-hidden="true">
-                {i === 0 && (
-                  <div class="jf-phone">
-                    <div class="jf-notch"></div>
-                    <div class="jf-screen">
-                      <div class="jf-title">Checklist EPI · Frente A</div>
-                      <div class="jf-check is-done"><span>✓</span> Capacete e óculos</div>
-                      <div class="jf-check is-done"><span>✓</span> Luva e calçado</div>
-                      <div class="jf-check is-done"><span>✓</span> Área sinalizada</div>
-                      <div class="jf-photo">
-                        <div class="jf-photo-img"></div>
-                        <span>Foto da evidência · 08:41</span>
-                      </div>
-                      <div class="jf-footer-bar">Salvar e sincronizar</div>
-                    </div>
-                  </div>
-                )}
-                {i === 1 && (
-                  <div class="jf-card">
-                    <div class="jf-card-head">Aprovação e assinatura</div>
-                    <div class="jf-sig-row">
-                      <div>
-                        <strong>Responsável técnico</strong>
-                        <span class="status status-ok">Assinou</span>
-                      </div>
-                      <svg class="jf-sig" viewBox="0 0 160 48" fill="none" aria-hidden="true">
-                        <path class="sig-path" d="M8 30 C24 8, 40 42, 56 22 S88 10, 104 28 136 18, 152 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
-                    <div class="jf-sig-row muted">
-                      <div>
-                        <strong>Supervisor</strong>
-                        <span class="status status-warn">Pendente</span>
-                      </div>
-                      <div class="jf-sig-blank">Aguardando</div>
-                    </div>
-                    <div class="jf-meta">Horário · 08:42</div>
-                  </div>
-                )}
-                {i === 2 && (
-                  <div class="jf-doc">
-                    <div class="jf-doc-bar">
-                      <span></span><span></span><span></span>
-                      <em>evidencia-pt-frente-a.pdf</em>
-                    </div>
-                    <div class="jf-doc-body">
-                      <div class="jf-doc-title">Permissão de Trabalho</div>
-                      <div class="jf-doc-line w80"></div>
-                      <div class="jf-doc-line w60"></div>
-                      <div class="jf-doc-line w90"></div>
-                      <div class="jf-doc-stamp">PDF · v3 · Pronto</div>
-                      <div class="jf-doc-badges">
-                        <span class="status status-ok">Verificação pública</span>
-                        <span class="status status-ok">Assinado</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {i === 3 && (
-                  <div class="jf-chart-card">
-                    <div class="jf-card-head">Indicadores do período</div>
-                    <div class="jf-kpis">
-                      <div><strong>96%</strong><span>Checklists em dia</span></div>
-                      <div><strong>4</strong><span>APRs abertas</span></div>
-                      <div><strong>2</strong><span>NCs em tratativa</span></div>
-                    </div>
-                    <div class="jf-bars">
-                      <span style="--h:72%"></span>
-                      <span style="--h:88%"></span>
-                      <span style="--h:64%"></span>
-                      <span style="--h:96%"></span>
-                      <span style="--h:80%"></span>
-                      <span style="--h:70%"></span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-    <p class="mock-caption mock-caption-journey">As telas desta seção são exemplos ilustrativos de interface, não resultados de clientes.</p>
+  <div class="book-steps" data-journey-steps>
+    <svg class="book-svg" data-journey-thread viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path data-journey-path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      <circle data-journey-bead r="5" fill="currentColor" cx="-40" cy="-40" />
+    </svg>
+    {
+      journeySteps.map((step, i) => (
+        <article class:list={['chapter', i === 2 && 'chapter-ink', i === 0 && 'is-active']} data-journey-step={i}>
+          <div class="chapter-inner">
+            <div class="n">{step.n}</div>
+            <div class="chapter-copy">
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
+            <div class:list={['journey-frame', 'chapter-fig', i === 0 && 'is-active']} data-journey-frame={i}>
+              {i === 0 && (
+                <div class="fig fig-list">
+                  <p>Checklist EPI · Frente A</p>
+                  <ul>
+                    <li>Capacete e óculos</li>
+                    <li>Luva e calçado</li>
+                    <li>Foto da evidência · 08:41</li>
+                  </ul>
+                </div>
+              )}
+              {i === 1 && (
+                <div class="fig fig-list">
+                  <p>Checklist EPI · aprovação</p>
+                  <ul>
+                    <li>Responsável técnico · assinou</li>
+                    <li>Supervisor · pendente</li>
+                  </ul>
+                </div>
+              )}
+              {i === 2 && (
+                <div class="fig fig-doc">
+                  <p>checklist-epi-frente-a.pdf</p>
+                  <strong>No acervo</strong>
+                  <span>PDF de exemplo · verificação pública</span>
+                </div>
+              )}
+              {i === 3 && (
+                <div class="fig fig-list">
+                  <p>Painel do exemplo</p>
+                  <ul>
+                    <li>1 checklist neste desenho</li>
+                    <li>1 aprovação pendente</li>
+                    <li>1 arquivo no acervo</li>
+                  </ul>
+                  <span>Números ilustrativos, não medição de cliente.</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </article>
+      ))
+    }
   </div>
 </section>

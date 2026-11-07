@@ -2,30 +2,30 @@
 import { offlineCaps } from '../data/content';
 ---
 
-<section class="section" id="campo" aria-labelledby="offline-title">
-  <div class="container split">
-    <div>
-      <p class="eyebrow">Uso em campo</p>
-      <h2 id="offline-title">Funciona no celular, mesmo sem internet.</h2>
-      <p class="lede">
-        Nos módulos preparados, o técnico continua registrando. Quando a rede volta, o SGS sincroniza.
+<section class="block" id="campo" aria-labelledby="offline-title">
+  <div class="container">
+    <div class="block-head">
+      <p class="kicker kicker-ink">Uso em campo</p>
+      <h2 id="offline-title">O celular continua registrando sem internet.</h2>
+      <p class="lede-quiet">
+        Nos módulos preparados, o técnico lê e registra. Quando a rede volta, o SGS sincroniza.
         Offline vale para APR, PT, checklists e não conformidades.
       </p>
     </div>
-    <ul class="checklist">
+    <ol class="ledger">
       {
-        offlineCaps.map((c) => (
+        offlineCaps.map((c, i) => (
           <li>
             <span class="mark mark-draw" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14"><path data-check-draw d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" width="16" height="16"><path data-check-draw d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
             <div>
-              <strong style="color: var(--blue-deep);">{c.name}</strong>
-              <div style="color: var(--ink-muted); font-size: 0.92rem;">{c.status}</div>
+              <strong>0{i + 1} · {c.name}</strong>
+              <p>{c.status}</p>
             </div>
           </li>
         ))
       }
-    </ul>
+    </ol>
   </div>
 </section>

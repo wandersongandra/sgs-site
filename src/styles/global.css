@@ -3143,3 +3143,184 @@ html:has(#pausar-movimento:checked) .section-dark::after,
   }
   .section-passage { display: none !important; }
 }
+
+/* Evolução: caminho do registro, um CTA comercial e acabamento. */
+.story-rail {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .55rem .85rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  max-width: 34rem;
+}
+.story-rail li {
+  display: flex;
+  align-items: baseline;
+  gap: .55rem;
+  min-width: 0;
+  color: #e8f1fa;
+  font-size: .95rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.story-rail li span {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: #d5e6f6;
+}
+.hero-follow {
+  margin: .85rem 0 0;
+}
+.text-link-on-dark {
+  color: #e8f1fa;
+  font-weight: 750;
+  text-underline-offset: .22em;
+}
+.stage-tag {
+  margin: 0 0 .4rem;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #1d5b8d;
+}
+.btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 2.45rem;
+  padding: .4rem .9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(252, 254, 255, .5);
+  background: transparent;
+  color: #fcfeff;
+  font-weight: 750;
+  font-size: .88rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-nav svg { width: 16px; height: 16px; }
+.site-header.header-over-hero.is-scrolled .btn-nav,
+.site-header.header-over-hero.is-solid .btn-nav {
+  color: #0d3457;
+  border-color: rgba(13, 52, 87, .28);
+  background: #fcfeff;
+}
+.section-follow { padding-top: 0; }
+.section-follow h2 { text-wrap: balance; max-width: 18ch; }
+.audience-card p {
+  margin: .45rem 0 0;
+  color: var(--ink-muted);
+  font-size: .95rem;
+}
+.audience-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.audience-grid .audience-card { grid-column: span 2; }
+.audience-grid .audience-card:nth-child(4),
+.audience-grid .audience-card:nth-child(5) { grid-column: span 3; }
+.journey-jumps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6rem;
+  margin: 0 0 1.5rem;
+  max-width: 100%;
+}
+.journey-jump {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  min-width: 0;
+  min-height: 3rem;
+  padding: .6rem .85rem;
+  border-radius: 14px;
+  border: 1px solid rgba(232, 241, 250, .42);
+  background: rgba(255, 255, 255, .05);
+  color: #e8f1fa;
+  font-weight: 750;
+  text-decoration: none;
+  line-height: 1.3;
+}
+.journey-jump span {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  color: #d5e6f6;
+}
+.journey-jump.is-current {
+  background: #e8f1fa;
+  border-color: #e8f1fa;
+  color: #0d3457;
+}
+.journey-jump.is-current span { color: #1d5b8d; }
+.journey-step[id] { scroll-margin-top: 6rem; }
+.section-dark .journey-frame .jf-note,
+.section-dark .jf-chart-card .jf-note {
+  margin: .35rem 0 .8rem;
+  color: #3d556c;
+  font-size: .78rem;
+  line-height: 1.4;
+}
+.mod-mock .mod-lead {
+  margin: 0 0 1rem;
+  color: #e8f1fa;
+}
+.mod-mock .mod-example {
+  margin: .9rem 0 0;
+  color: #d5e6f6;
+  font-size: .78rem;
+  line-height: 1.4;
+}
+.cta-login {
+  margin: 1rem 0 0;
+  color: #e8f1fa;
+  font-size: .98rem;
+}
+.cta-login a {
+  color: #fff;
+  font-weight: 750;
+  text-underline-offset: .2em;
+}
+@media (max-width: 980px) {
+  .hero.hero-dark { min-height: 0; }
+  .audience-grid { grid-template-columns: 1fr 1fr; }
+  .audience-grid .audience-card,
+  .audience-grid .audience-card:nth-child(4),
+  .audience-grid .audience-card:nth-child(5) { grid-column: auto; }
+  .audience-grid .audience-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .story-rail,
+  .journey-jumps { grid-template-columns: 1fr; }
+  .hero.hero-dark { padding-top: 6.2rem; }
+  .nav-links .btn-nav {
+    width: 100%;
+    color: #0d3457;
+    border-color: rgba(13, 52, 87, .28);
+    background: #fcfeff;
+  }
+  body.nav-open .motion-control { visibility: hidden; }
+  .motion-control {
+    top: auto;
+    bottom: 1rem;
+    right: .75rem;
+  }
+  .audience-grid { grid-template-columns: 1fr; }
+  .audience-grid .audience-card:last-child { grid-column: auto; }
+}
+
+/* O header fica numa faixa clara acima do hero, não sobre o azul.
+   Texto e o atalho de WhatsApp precisam ser escuros nessa faixa. */
+.site-header.header-over-hero .brand span,
+.site-header.header-over-hero .nav-links a {
+  color: #0f2438;
+}
+.site-header.header-over-hero .btn-nav,
+.site-header.header-over-hero.is-scrolled .btn-nav,
+.site-header.header-over-hero.is-solid .btn-nav {
+  color: #0d3457;
+  border-color: rgba(13, 52, 87, .32);
+  background: #fcfeff;
+}

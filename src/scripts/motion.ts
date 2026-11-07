@@ -61,6 +61,13 @@ function initNav() {
       toggle?.focus();
     }
   });
+
+  const desktopNav = window.matchMedia('(min-width: 721px)');
+  const closeMenuOnDesktop = () => {
+    if (desktopNav.matches) setOpen(false);
+  };
+  desktopNav.addEventListener('change', closeMenuOnDesktop);
+  window.addEventListener('resize', closeMenuOnDesktop, { passive: true });
 }
 
 function initNavCurrent() {
@@ -265,6 +272,8 @@ function settleHeroReduced() {
   });
   const chip = document.querySelector<HTMLElement>('[data-sync-chip]');
   if (chip) gsap.set(chip, { autoAlpha: 1, y: 0 });
+  const kpi = document.querySelector<HTMLElement>('[data-kpi]');
+  if (kpi) kpi.textContent = '92%';
   const path = document.querySelector<SVGPathElement>('[data-hero-path]');
   if (path) path.style.strokeDashoffset = '0';
 }
@@ -274,20 +283,23 @@ function layoutHeroThread() {
   const svg = stage?.querySelector<SVGSVGElement>('[data-hero-thread]');
   const path = svg?.querySelector<SVGPathElement>('[data-hero-path]');
   const bead = svg?.querySelector<SVGCircleElement>('[data-hero-bead]');
-  const phone = stage?.querySelector<HTMLElement>('[data-phone]');
-  const list = stage?.querySelector<HTMLElement>('[data-dash-list]');
-  if (!stage || !svg || !path || !bead || !phone || !list) return null;
+  const marks = stage ? Array.from(stage.querySelectorAll<HTMLElement>('[data-rail-mark]')) : [];
+  if (!stage || !svg || !path || !bead || marks.length < 2) return null;
   const box = stage.getBoundingClientRect();
   if (box.width < 8 || box.height < 8) return null;
-  const pr = phone.getBoundingClientRect();
-  const lr = list.getBoundingClientRect();
-  const x1 = pr.left - box.left + pr.width * 0.22;
-  const y1 = pr.top - box.top + 14;
-  const x2 = lr.left - box.left + 10;
-  const y2 = lr.top - box.top + lr.height * 0.42;
-  const bow = Math.min(x1, x2) - 48;
+  const pts = marks.map((mark) => {
+    const r = mark.getBoundingClientRect();
+    return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+  });
   svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
-  const d = `M ${x1.toFixed(1)} ${y1.toFixed(1)} C ${bow.toFixed(1)} ${(y1 - 24).toFixed(1)}, ${bow.toFixed(1)} ${(y2 + 28).toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1];
+    const b = pts[i];
+    const mx = (a.x + b.x) / 2;
+    const my = (a.y + b.y) / 2;
+    d += ` C ${mx.toFixed(1)} ${a.y.toFixed(1)}, ${mx.toFixed(1)} ${b.y.toFixed(1)}, ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+  }
   path.setAttribute('d', d);
   const len = path.getTotalLength();
   path.style.strokeDasharray = `${len}`;
@@ -299,127 +311,47 @@ function layoutHeroThread() {
 }
 
 function initHeroSync(reduce: boolean) {
-  const stage = document.querySelector('[data-hero-stage]');
+  const stage = document.querySelector<HTMLElement>('[data-hero-stage]');
   if (!stage) return;
+  const steps = Array.from(stage.querySelectorAll<HTMLElement>('[data-rail-step]'));
   const thread = layoutHeroThread();
   window.addEventListener('resize', () => layoutHeroThread(), { passive: true });
-
-  if (reduce) {
-    settleHeroReduced();
+  const setOn = (index: number) => {
+    steps.forEach((el, i) => el.classList.toggle('is-on', i <= index));
+  };
+  if (reduce || !thread || steps.length < 2) {
+    setOn(Math.max(0, steps.length - 1));
+    if (thread) thread.path.style.strokeDashoffset = '0';
     return;
   }
-
-  const phoneItems = gsap.utils.toArray<HTMLElement>('[data-phone-item]');
-  const dashItems = gsap.utils.toArray<HTMLElement>('[data-dash-item]');
-  const bars = gsap.utils.toArray<HTMLElement>('[data-chart] span');
-  const chip = document.querySelector<HTMLElement>('[data-sync-chip]');
-  const kpi = document.querySelector<HTMLElement>('[data-kpi]');
-
-  gsap.set(bars, { scaleY: 0.28, transformOrigin: 'bottom' });
-  if (chip) gsap.set(chip, { autoAlpha: 0, y: 8 });
-  if (thread) thread.path.style.strokeDashoffset = String(thread.len);
-
-  const placeBead = (progress: number) => {
-    const live = document.querySelector<SVGPathElement>('[data-hero-path]');
-    const bead = document.querySelector<SVGCircleElement>('[data-hero-bead]');
-    if (!live || !bead) return;
-    const len = Number(live.dataset.len || 0);
-    if (!len) return;
-    const point = live.getPointAtLength(len * progress);
-    bead.setAttribute('cx', String(point.x));
-    bead.setAttribute('cy', String(point.y));
-  };
-
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, defaults: { ease: 'power2.out' } });
-  tl.add(() => {
-    phoneItems.forEach((el) => el.classList.remove('is-done'));
-    dashItems.forEach((el) => {
-      el.classList.remove('is-in');
-      const status = el.querySelector<HTMLElement>('[data-status]');
-      const idx = Number(el.dataset.dashItem || '0');
-      if (status && (idx === 0 || idx === 1)) {
-        status.textContent = 'Aguardando';
-        status.className = 'status status-sync';
-      }
+  thread.path.style.strokeDashoffset = String(thread.len);
+  setOn(-1);
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.9 });
+  steps.forEach((_, i) => {
+    const target = thread.len * (1 - (i + 1) / steps.length);
+    tl.to(thread.path, {
+      strokeDashoffset: target,
+      duration: 0.62,
+      ease: 'power1.inOut',
+      onStart: () => setOn(i),
+      onUpdate() {
+        const live = stage.querySelector<SVGPathElement>('[data-hero-path]');
+        const bead = stage.querySelector<SVGCircleElement>('[data-hero-bead]');
+        const len = Number(live?.dataset.len || 0);
+        if (!live || !bead || !len) return;
+        const current = Number(gsap.getProperty(live, 'strokeDashoffset'));
+        const point = live.getPointAtLength(Math.max(0.01, len - current));
+        bead.setAttribute('cx', String(point.x));
+        bead.setAttribute('cy', String(point.y));
+      },
     });
-    gsap.set(bars, { scaleY: 0.28 });
-    if (chip) gsap.set(chip, { autoAlpha: 0, y: 8 });
-    if (kpi) kpi.textContent = '80%';
-    const live = document.querySelector<SVGPathElement>('[data-hero-path]');
-    if (live?.dataset.len) live.style.strokeDashoffset = live.dataset.len;
-    placeBead(0);
   });
-
-  if (thread) {
-    tl.to(
-      thread.path,
-      {
-        strokeDashoffset: 0,
-        duration: 1.7,
-        ease: 'none',
-        onUpdate() {
-          const live = document.querySelector<SVGPathElement>('[data-hero-path]');
-          const len = Number(live?.dataset.len || 1);
-          const current = Number(gsap.getProperty(thread.path, 'strokeDashoffset'));
-          placeBead(1 - current / len);
-        },
-      },
-      0.15,
-    );
-  }
-
-  phoneItems.forEach((item, i) => {
-    tl.to(item, { duration: 0.01, onStart: () => item.classList.add('is-done') }, i * 0.42 + 0.2);
-    const dash = dashItems[i];
-    if (!dash) return;
-    tl.to(
-      dash,
-      {
-        duration: 0.35,
-        onStart: () => {
-          dash.classList.add('is-in');
-          const status = dash.querySelector<HTMLElement>('[data-status]');
-          if (!status) return;
-          if (i < 2) {
-            status.textContent = 'Concluído';
-            status.className = 'status status-ok';
-          } else if (i === 2) {
-            status.textContent = 'Em análise';
-            status.className = 'status status-warn';
-          } else {
-            status.textContent = 'Publicado';
-            status.className = 'status status-ok';
-          }
-        },
-      },
-      i * 0.42 + 0.42,
-    );
-  });
-
-  tl.to(bars, { scaleY: 1, duration: 1.05, stagger: 0.05, ease: 'power3.out' }, 0.55);
-  if (kpi) {
-    const proxy = { value: 80 };
-    tl.to(
-      proxy,
-      {
-        value: 92,
-        duration: 0.8,
-        snap: { value: 1 },
-        onUpdate: () => {
-          kpi.textContent = `${Math.round(proxy.value)}%`;
-        },
-      },
-      '-=0.55',
-    );
-  }
-  if (chip) tl.to(chip, { autoAlpha: 1, y: 0, duration: 0.4 }, '-=0.3');
-  tl.to({}, { duration: 2.2 });
-
+  tl.to({}, { duration: 1.15 });
   const syncHero = () => {
     const hold = motionPaused() || document.hidden || !ScrollTrigger.isInViewport(stage);
     if (hold) tl.pause();
     else tl.play();
-    if (stage instanceof HTMLElement) stage.dataset.heroHold = hold ? '1' : '0';
+    stage.dataset.heroHold = hold ? '1' : '0';
   };
   heroSyncs.push(syncHero);
   ScrollTrigger.create({
@@ -455,8 +387,9 @@ function initHeroSplit(reduce: boolean) {
   );
 }
 
-function initHeadingMasks(reduce: boolean) {
-  if (reduce) return;
+function initHeadingMasks(_reduce: boolean) {
+  // A máscara em todo H2 escondia o texto na entrada. A narrativa fica no trilho e no fio.
+  return;
   document.querySelectorAll<HTMLElement>('main h2').forEach((h2) => {
     if (h2.hasAttribute('data-word-scrub') || h2.dataset.maskReady === '1') return;
     const parts = h2.innerHTML.split(/<br\s*\/?>/i).map((part) => part.trim()).filter(Boolean);
@@ -495,7 +428,7 @@ function layoutJourneyThread() {
   const path = svg?.querySelector<SVGPathElement>('[data-journey-path]');
   const bead = svg?.querySelector<SVGCircleElement>('[data-journey-bead]');
   if (!root || !svg || !path || !bead) return null;
-  const marks = Array.from(root.querySelectorAll<HTMLElement>('.journey-step .n'));
+  const marks = Array.from(root.querySelectorAll<HTMLElement>('[data-journey-step] .n'));
   if (marks.length < 2) return null;
   const box = root.getBoundingClientRect();
   if (box.width < 8 || box.height < 8) return null;
@@ -527,6 +460,12 @@ function initJourney(reduce: boolean) {
       const on = i === index;
       el.classList.toggle('is-active', on);
       el.querySelector('[data-journey-frame]')?.classList.toggle('is-active', on);
+    });
+    document.querySelectorAll<HTMLAnchorElement>('[data-journey-jump]').forEach((a, i) => {
+      const on = i === index;
+      a.classList.toggle('is-current', on);
+      if (on) a.setAttribute('aria-current', 'step');
+      else a.removeAttribute('aria-current');
     });
   };
 

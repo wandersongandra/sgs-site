@@ -2,21 +2,21 @@
 import { audiences } from '../data/content';
 ---
 
-<section class="section section-follow" aria-labelledby="publico-title">
+<section class="block audience-block" aria-labelledby="publico-title">
   <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Para quem é</p>
+    <div class="block-head">
+      <p class="kicker kicker-ink">Para quem é</p>
       <h2 id="publico-title">Do técnico na planta ao gestor no painel.</h2>
     </div>
-    <div class="audience-grid">
+    <dl class="who">
       {
         audiences.map((a) => (
-          <article class="card audience-card" data-spotlight>
-            <h3>{a.title}</h3>
-            <p>{a.text}</p>
-          </article>
+          <div class="who-row">
+            <dt>{a.title}</dt>
+            <dd>{a.text}</dd>
+          </div>
         ))
       }
-    </div>
+    </dl>
   </div>
 </section>

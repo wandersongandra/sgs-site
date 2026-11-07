@@ -1,108 +1,62 @@
 ---
 import { moduleGroups } from '../data/content';
-import ModuleIcon from './ModuleIcon.astro';
-
-const mockRows: Record<string, { title: string; status: string; tone: string }[]> = {
-  campo: [
-    { title: 'APR · Altura', status: 'Aprovada', tone: 'ok' },
-    { title: 'PT · Confinado', status: 'Em análise', tone: 'warn' },
-    { title: 'Checklist EPI', status: 'Concluído', tone: 'ok' },
-    { title: 'DDS manhã', status: 'Publicado', tone: 'ok' },
-  ],
-  gestao: [
-    { title: 'NC · Guarda-corpo', status: 'Em tratativa', tone: 'warn' },
-    { title: 'Auditoria interna', status: 'Agendada', tone: 'sync' },
-    { title: 'Ação corretiva #18', status: 'No prazo', tone: 'ok' },
-    { title: 'CAT registrada', status: 'Arquivada', tone: 'ok' },
-  ],
-  saude: [
-    { title: 'Treinamento NR-35', status: 'Vence em 12d', tone: 'warn' },
-    { title: 'Exame periódico', status: 'Em dia', tone: 'ok' },
-    { title: 'EPI · Capacete', status: 'Entregue', tone: 'ok' },
-    { title: 'Calendário SST', status: '3 eventos', tone: 'sync' },
-  ],
-  docs: [
-    { title: 'PT assinada.pdf', status: 'v2', tone: 'ok' },
-    { title: 'APR altura.pdf', status: 'Assinar', tone: 'warn' },
-    { title: 'Verificação pública', status: 'Ativa', tone: 'ok' },
-    { title: 'Importação assistida', status: 'Pronta', tone: 'sync' },
-  ],
-  relatorios: [
-    { title: 'Conformidade', status: 'No painel', tone: 'ok' },
-    { title: 'Relatório fotográfico', status: 'Com fotos', tone: 'sync' },
-    { title: 'RDO · Ontem', status: 'Enviado', tone: 'ok' },
-    { title: 'Pendências abertas', status: 'Em aberto', tone: 'warn' },
-  ],
-};
 ---
 
-<section class="section section-soft" id="modulos" aria-labelledby="modulos-title">
+<section class="block spec" id="modulos" aria-labelledby="modulos-title">
   <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Módulos</p>
-      <h2 id="modulos-title">Tudo que a operação de segurança precisa, no mesmo sistema.</h2>
-      <p>Escolha uma área e veja o que o SGS cobre em cada etapa do trabalho.</p>
+    <div class="block-head">
+      <p class="kicker kicker-ink">Módulos</p>
+      <h2 id="modulos-title">O que a operação de segurança encontra no mesmo sistema.</h2>
+      <p>Escolha uma área. A lista ao lado é o produto, não uma tela.</p>
     </div>
 
-    <div class="modules-pin" data-modules-pin>
-    <div class="mod-tabs" role="tablist" aria-label="Áreas do SGS" data-mod-tabs>
-      <span class="mod-tab-indicator" data-mod-indicator aria-hidden="true"></span>
+    <div class="spec-layout">
+      <div class="spec-tabs" role="tablist" aria-label="Áreas do SGS" data-mod-tabs>
+        {
+          moduleGroups.map((group, i) => (
+            <button
+              class="spec-tab"
+              type="button"
+              role="tab"
+              id={`tab-${group.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`panel-${group.id}`}
+              data-mod-tab={group.id}
+            >
+              <span>0{i + 1}</span>
+              {group.title}
+            </button>
+          ))
+        }
+      </div>
+      <div class="spec-stage">
       {
         moduleGroups.map((group, i) => (
-          <button
-            class="mod-tab"
-            type="button"
-            role="tab"
-            id={`tab-${group.id}`}
-            aria-selected={i === 0 ? 'true' : 'false'}
-            aria-controls={`panel-${group.id}`}
-            data-mod-tab={group.id}
+          <div
+            class="spec-panel"
+            role="tabpanel"
+            id={`panel-${group.id}`}
+            aria-labelledby={`tab-${group.id}`}
+            data-mod-panel={group.id}
+            hidden={i !== 0}
           >
-            {group.title}
-          </button>
+            <p class="spec-lead">{group.lead}</p>
+            <ul class="spec-rows">
+              {group.items.map((item) => (
+                <li>
+                  <div>
+                    <strong>{item.name}</strong>
+                    {item.full !== item.name && <em>{item.full}</em>}
+                  </div>
+                  <p>{item.desc}</p>
+                </li>
+              ))}
+            </ul>
+            <p class="spec-note">Recursos do produto. Esta lista não reproduz uma tela do sistema.</p>
+          </div>
         ))
       }
-    </div>
-
-    {
-      moduleGroups.map((group, i) => (
-        <div
-          class:list={['mod-panel', i === 0 && 'is-active']}
-          role="tabpanel"
-          id={`panel-${group.id}`}
-          aria-labelledby={`tab-${group.id}`}
-          data-mod-panel={group.id}
-          hidden={i !== 0}
-        >
-          <div class="mod-mock">
-            <div class="label">{group.mockLabel}</div>
-            <h3>{group.title}</h3>
-            <p class="mod-lead">{group.lead}</p>
-            <div class="mod-mock-list">
-              {(mockRows[group.id] || []).map((row) => (
-                <div class="mod-mock-row">
-                  <span>{row.title}</span>
-                  <span class={`status status-${row.tone}`}>{row.status}</span>
-                </div>
-              ))}
-            </div>
-            <p class="mod-example">Exemplo de lista. Não é uma tela do sistema.</p>
-          </div>
-          <div class="mod-bento" data-cols={group.items.length === 6 ? '3' : '2'}>
-            {group.items.map((item) => (
-              <article class="mod-card" data-spotlight>
-                <ModuleIcon name={item.icon} />
-                <div>
-                  <h3>{item.name}</h3>
-                  {item.full !== item.name && <div class="full">{item.full}</div>}
-                </div>
-                <p>{item.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      ))
-    }
+      </div>
     </div>
   </div>
 </section>

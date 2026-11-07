@@ -1,36 +1,28 @@
 ---
 import { valuePoints } from '../data/content';
-
-const icons = [
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15V9M12 15V7M16 15v-3"/></svg>`,
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>`,
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="10" r="3"/><circle cx="16" cy="10" r="3"/><path d="M3 19c.8-2.5 2.8-4 5-4s4.2 1.5 5 4M11 19c.8-2.5 2.8-4 5-4s4.2 1.5 5 4"/></svg>`,
-];
 ---
 
-<section class="section editorial" id="produto" aria-labelledby="produto-title" data-editorial>
+<section class="block quote-block" id="produto" aria-labelledby="produto-title">
   <div class="container">
-    <p class="eyebrow">Por que o SGS</p>
-    <h2 id="produto-title" class="display-statement" data-word-scrub>
+    <p class="kicker kicker-ink">Por que o SGS</p>
+    <h2 id="produto-title" class="statement" data-word-scrub>
       <span data-word>Menos</span>{' '}<span data-word>planilha.</span>{' '}<span data-word>Mais</span>{' '}<span data-word>evidência.</span>
     </h2>
-    <p class="editorial-lede">
+    <p class="quote-lede">
       O registro feito no celular segue para aprovação, entra no acervo e aparece para quem acompanha a operação.
     </p>
-
-    <div class="editorial-points">
+    <ol class="rule-list">
       {
         valuePoints.map((item, i) => (
-          <article class="editorial-point" data-spotlight>
-            <div class="ep-top">
-              <span class="ep-num">0{i + 1}</span>
-              <span class="ep-icon" set:html={icons[i]} />
+          <li>
+            <span>0{i + 1}</span>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
             </div>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
+          </li>
         ))
       }
-    </div>
+    </ol>
   </div>
 </section>

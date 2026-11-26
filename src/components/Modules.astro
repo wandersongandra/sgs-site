@@ -38,14 +38,14 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
 
 <section class="section section-soft" id="modulos" aria-labelledby="modulos-title">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Módulos</p>
       <h2 id="modulos-title">Tudo que a operação de segurança precisa, no mesmo sistema.</h2>
       <p>Escolha uma área e veja o que o SGS cobre em cada etapa do trabalho.</p>
     </div>
 
     <div class="modules-pin" data-modules-pin>
-    <div class="mod-tabs" role="tablist" aria-label="Áreas do SGS" data-mod-tabs>
+    <div class="mod-tabs reveal" role="tablist" aria-label="Áreas do SGS" data-mod-tabs>
       <span class="mod-tab-indicator" data-mod-indicator aria-hidden="true"></span>
       {
         moduleGroups.map((group, i) => (

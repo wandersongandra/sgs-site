@@ -28,7 +28,7 @@ function prodFiles() {
           `script-src 'self' ${[...hashes].join(' ')}`,
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data:",
-          "font-src 'self'",
+          "font-src 'self' data:",
           "connect-src 'self'",
           "manifest-src 'self'",
           "object-src 'none'",
@@ -72,7 +72,5 @@ export default defineConfig({
   site: SITE,
   compressHTML: true,
   build: { inlineStylesheets: 'auto' },
-  // Sem data: URIs (fontes/imagens) para manter a CSP estrita
-  vite: { build: { assetsInlineLimit: 0 } },
   integrations: [prodFiles()],
 });

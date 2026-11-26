@@ -1,14 +1,11 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-function motionPaused() {
-  return document.querySelector<HTMLInputElement>('#pausar-movimento')?.checked === true;
-}
-
-const heroSyncs: Array<() => void> = [];
+type Fine = boolean;
 
 function prefersReduced() {
   return (
@@ -21,18 +18,6 @@ function hasFinePointer() {
   return window.matchMedia('(pointer: fine)').matches;
 }
 
-function isCoarseOrNarrow() {
-  return (
-    window.matchMedia('(max-width: 899px)').matches ||
-    window.matchMedia('(pointer: coarse)').matches
-  );
-}
-
-function focusTarget(el: HTMLElement) {
-  if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
-  el.focus({ preventScroll: true });
-}
-
 function initNav() {
   const header = document.querySelector<HTMLElement>('[data-header]');
   const hero = document.querySelector<HTMLElement>('[data-hero]');
@@ -40,100 +25,29 @@ function initNav() {
     if (!header) return;
     const y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 8);
-    if (hero) header.classList.toggle('is-solid', y > hero.offsetHeight - 80);
+    if (hero) {
+      const past = y > hero.offsetHeight - 80;
+      header.classList.toggle('is-solid', past);
+    }
   };
   onScrollHeader();
   window.addEventListener('scroll', onScrollHeader, { passive: true });
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
   const links = document.querySelector<HTMLElement>('[data-nav-links]');
-  const setOpen = (open: boolean) => {
-    links?.classList.toggle('is-open', open);
-    toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle?.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-    document.body.classList.toggle('nav-open', open);
-  };
-  toggle?.addEventListener('click', () => setOpen(!links?.classList.contains('is-open')));
-  links?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && links?.classList.contains('is-open')) {
-      setOpen(false);
-      toggle?.focus();
-    }
+  toggle?.addEventListener('click', () => {
+    const open = links?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
-}
-
-function initNavCurrent() {
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
-  if (!links.length) return;
-  const sections = links
-    .map((a) => document.getElementById((a.getAttribute('href') || '').slice(1)))
-    .filter((el): el is HTMLElement => !!el);
-
-  const setCurrent = (id: string) => {
-    links.forEach((a) => {
-      const on = a.getAttribute('href') === `#${id}`;
-      a.classList.toggle('is-current', on);
-      if (on) a.setAttribute('aria-current', 'location');
-      else a.removeAttribute('aria-current');
-    });
-  };
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const hit = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (hit?.target.id) setCurrent(hit.target.id);
-    },
-    { rootMargin: '-42% 0px -48% 0px', threshold: [0.15, 0.4] },
-  );
-  sections.forEach((section) => observer.observe(section));
-}
-
-function bindAnchors(lenis?: Lenis) {
-  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-      if (a.target === '_blank') return;
-      const href = a.getAttribute('href') || '';
-      if (href.length < 2) return;
-      const el = document.querySelector<HTMLElement>(href);
-      if (!el) return;
-      if (!lenis) {
-        window.setTimeout(() => focusTarget(el), 0);
-        return;
-      }
-      e.preventDefault();
-      if (location.hash !== href) history.pushState(null, '', href);
-      lenis.scrollTo(el, { offset: -80, duration: 0.85 });
-      focusTarget(el);
+  links?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      links.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
     });
   });
 }
 
-function initPassage(reduce: boolean) {
-  const bar = document.querySelector<HTMLElement>('[data-passage]');
-  if (!bar || reduce) return;
-  let last = '';
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const id = (entry.target as HTMLElement).id;
-        if (!id || id === last) return;
-        last = id;
-        bar.classList.remove('is-run');
-        void bar.offsetWidth;
-        bar.classList.add('is-run');
-      });
-    },
-    { rootMargin: '-38% 0px -52% 0px', threshold: 0.01 },
-  );
-  document.querySelectorAll<HTMLElement>('main section[id]').forEach((section) => observer.observe(section));
-}
-
-function initModulesTabs(reduce: boolean) {
+function initModulesTabs() {
   const tabsRoot = document.querySelector<HTMLElement>('[data-mod-tabs]');
   const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mod-tab]'));
   const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-mod-panel]'));
@@ -148,22 +62,10 @@ function initModulesTabs(reduce: boolean) {
     indicator.style.transform = `translateX(${box.left - rootBox.left}px)`;
   };
 
-  const playPanel = (panel: HTMLElement) => {
-    if (reduce) return;
-    const bits = panel.querySelectorAll<HTMLElement>('.mod-mock-row, .mod-card');
-    if (!bits.length) return;
-    gsap.fromTo(
-      bits,
-      { autoAlpha: 0, y: 14 },
-      { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.035, ease: 'power2.out', overwrite: 'auto' },
-    );
-  };
-
-  const activate = (id: string, animate: boolean) => {
+  const activate = (id: string) => {
     tabs.forEach((tab) => {
       const on = tab.dataset.modTab === id;
       tab.setAttribute('aria-selected', on ? 'true' : 'false');
-      tab.tabIndex = on ? 0 : -1;
       if (on) moveIndicator(tab);
     });
     panels.forEach((panel) => {
@@ -171,10 +73,11 @@ function initModulesTabs(reduce: boolean) {
       if (on) {
         panel.hidden = false;
         requestAnimationFrame(() => panel.classList.add('is-active'));
-        if (animate) playPanel(panel);
       } else {
         panel.classList.remove('is-active');
-        panel.hidden = true;
+        window.setTimeout(() => {
+          if (panel.dataset.modPanel !== id) panel.hidden = true;
+        }, 280);
       }
     });
   };
@@ -188,65 +91,143 @@ function initModulesTabs(reduce: boolean) {
     const current = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
     if (current) moveIndicator(current);
   });
-  tabs.forEach((tab, i) => {
-    tab.tabIndex = tab.getAttribute('aria-selected') === 'true' ? 0 : -1;
-    tab.addEventListener('click', () => activate(tab.dataset.modTab || '', true));
-    tab.addEventListener('keydown', (e) => {
-      const map: Record<string, number> = {
-        ArrowRight: i + 1,
-        ArrowDown: i + 1,
-        ArrowLeft: i - 1,
-        ArrowUp: i - 1,
-        Home: 0,
-        End: tabs.length - 1,
-      };
-      if (!(e.key in map)) return;
-      e.preventDefault();
-      const next = tabs[(map[e.key] + tabs.length) % tabs.length];
-      next.focus();
-      activate(next.dataset.modTab || '', true);
-    });
-  });
+  tabs.forEach((tab) => tab.addEventListener('click', () => activate(tab.dataset.modTab || '')));
 }
 
 function finishPreloader(el: HTMLElement) {
   el.classList.add('is-done');
   document.documentElement.classList.add('preloader-done');
-  try {
-    sessionStorage.setItem('sgs-preloader-done', '1');
-  } catch {
-    /* ignore */
-  }
+  sessionStorage.setItem('sgs-preloader-done', '1');
 }
 
-function initPreloader() {
+function initPreloader(reduce: boolean) {
   const el = document.querySelector<HTMLElement>('[data-preloader]');
   if (!el) return;
-  finishPreloader(el);
+  if (document.documentElement.classList.contains('preloader-done') || sessionStorage.getItem('sgs-preloader-done') === '1') {
+    finishPreloader(el);
+    return;
+  }
+  const skip = () => finishPreloader(el);
+  el.querySelector('[data-preloader-skip]')?.addEventListener('click', skip);
+
+  if (reduce) {
+    skip();
+    return;
+  }
+
+  const paths = el.querySelectorAll<SVGPathElement>('[data-draw]');
+  paths.forEach((path) => {
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = `${len}`;
+    path.style.strokeDashoffset = `${len}`;
+  });
+
+  const tl = gsap.timeline({
+    defaults: { ease: 'power2.out' },
+    onComplete: skip,
+  });
+  tl.to(paths, { strokeDashoffset: 0, duration: 0.75, stagger: 0.08 }, 0);
+  tl.fromTo('.preloader-label', { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.3 }, 0.35);
+  tl.to({}, { duration: 0.25 });
 }
 
-function initMagnetic(fine: boolean, reduce: boolean) {
+function initCursor(fine: Fine, reduce: boolean) {
+  const root = document.querySelector<HTMLElement>('[data-cursor]');
+  const dot = document.querySelector<HTMLElement>('[data-cursor-dot]');
+  const ring = document.querySelector<HTMLElement>('[data-cursor-ring]');
+  if (!root || !dot || !ring || !fine || reduce) return;
+
+  // Park far off-screen so QA shots never capture a mid-page ring
+  const pos = { x: -200, y: -200 };
+  const ringPos = { x: -200, y: -200 };
+  let armed = false;
+  root.classList.add('is-hidden');
+  gsap.set([dot, ring], { x: -200, y: -200 });
+
+  window.addEventListener(
+    'pointermove',
+    (e) => {
+      // Ignore synthetic / zeroed events; require a real mouse delta
+      if (!armed) {
+        if (e.movementX === 0 && e.movementY === 0 && e.clientX === 0 && e.clientY === 0) return;
+        armed = true;
+        root.classList.add('is-ready');
+        root.classList.remove('is-hidden');
+      }
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      root.classList.remove('is-hidden');
+      gsap.set(dot, { x: pos.x, y: pos.y });
+    },
+    { passive: true },
+  );
+  window.addEventListener('pointerleave', () => root.classList.add('is-hidden'));
+  window.addEventListener('blur', () => root.classList.add('is-hidden'));
+
+  gsap.ticker.add(() => {
+    if (!armed) return;
+    ringPos.x += (pos.x - ringPos.x) * 0.18;
+    ringPos.y += (pos.y - ringPos.y) * 0.18;
+    gsap.set(ring, { x: ringPos.x, y: ringPos.y });
+  });
+
+  const hoverables = 'a, button, summary, [data-magnetic], [data-spotlight], .mod-tab';
+  document.querySelectorAll(hoverables).forEach((el) => {
+    el.addEventListener('pointerenter', () => root.classList.add('is-hover'));
+    el.addEventListener('pointerleave', () => root.classList.remove('is-hover'));
+  });
+}
+
+function initMagnetic(fine: Fine, reduce: boolean) {
   if (!fine || reduce) return;
   document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
+    const strength = 18;
     btn.addEventListener('pointermove', (e) => {
       const r = btn.getBoundingClientRect();
-      const x = (e.clientX - (r.left + r.width / 2)) / 28;
-      const y = (e.clientY - (r.top + r.height / 2)) / 28;
-      gsap.to(btn, { x, y, duration: 0.35, ease: 'power3.out', overwrite: 'auto' });
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      gsap.to(btn, { x: x / strength, y: y / strength, duration: 0.25, ease: 'power3.out' });
     });
     btn.addEventListener('pointerleave', () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+      gsap.to(btn, { x: 0, y: 0, duration: 0.45, ease: 'power3.out' });
     });
   });
 }
 
-function initSpotlight(fine: boolean, reduce: boolean) {
+function initSpotlight(fine: Fine, reduce: boolean) {
   if (!fine || reduce) return;
   document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((card) => {
     card.addEventListener('pointermove', (e) => {
       const r = card.getBoundingClientRect();
       card.style.setProperty('--spot-x', `${((e.clientX - r.left) / r.width) * 100}%`);
       card.style.setProperty('--spot-y', `${((e.clientY - r.top) / r.height) * 100}%`);
+    });
+  });
+}
+
+function initHeroTilt(fine: Fine, reduce: boolean) {
+  const root = document.querySelector<HTMLElement>('[data-tilt-root]');
+  if (!root || !fine || reduce) return;
+  const layers = Array.from(root.querySelectorAll<HTMLElement>('[data-tilt-layer]'));
+
+  root.addEventListener('pointermove', (e) => {
+    const r = root.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    layers.forEach((layer) => {
+      const depth = Number(layer.dataset.tiltLayer || '0.4');
+      layer.style.setProperty('--rx', `${(-py * 8 * depth).toFixed(2)}deg`);
+      layer.style.setProperty('--ry', `${(px * 10 * depth).toFixed(2)}deg`);
+      layer.style.setProperty('--tx', `${(px * 16 * depth).toFixed(2)}px`);
+      layer.style.setProperty('--ty', `${(py * 12 * depth).toFixed(2)}px`);
+    });
+  });
+  root.addEventListener('pointerleave', () => {
+    layers.forEach((layer) => {
+      layer.style.setProperty('--rx', '0deg');
+      layer.style.setProperty('--ry', '0deg');
+      layer.style.setProperty('--tx', '0px');
+      layer.style.setProperty('--ty', '0px');
     });
   });
 }
@@ -265,45 +246,11 @@ function settleHeroReduced() {
   });
   const chip = document.querySelector<HTMLElement>('[data-sync-chip]');
   if (chip) gsap.set(chip, { autoAlpha: 1, y: 0 });
-  const path = document.querySelector<SVGPathElement>('[data-hero-path]');
-  if (path) path.style.strokeDashoffset = '0';
-}
-
-function layoutHeroThread() {
-  const stage = document.querySelector<HTMLElement>('[data-hero-stage]');
-  const svg = stage?.querySelector<SVGSVGElement>('[data-hero-thread]');
-  const path = svg?.querySelector<SVGPathElement>('[data-hero-path]');
-  const bead = svg?.querySelector<SVGCircleElement>('[data-hero-bead]');
-  const phone = stage?.querySelector<HTMLElement>('[data-phone]');
-  const list = stage?.querySelector<HTMLElement>('[data-dash-list]');
-  if (!stage || !svg || !path || !bead || !phone || !list) return null;
-  const box = stage.getBoundingClientRect();
-  if (box.width < 8 || box.height < 8) return null;
-  const pr = phone.getBoundingClientRect();
-  const lr = list.getBoundingClientRect();
-  const x1 = pr.left - box.left + pr.width * 0.22;
-  const y1 = pr.top - box.top + 14;
-  const x2 = lr.left - box.left + 10;
-  const y2 = lr.top - box.top + lr.height * 0.42;
-  const bow = Math.min(x1, x2) - 48;
-  svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
-  const d = `M ${x1.toFixed(1)} ${y1.toFixed(1)} C ${bow.toFixed(1)} ${(y1 - 24).toFixed(1)}, ${bow.toFixed(1)} ${(y2 + 28).toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
-  path.setAttribute('d', d);
-  const len = path.getTotalLength();
-  path.style.strokeDasharray = `${len}`;
-  path.dataset.len = String(len);
-  const point = path.getPointAtLength(0);
-  bead.setAttribute('cx', String(point.x));
-  bead.setAttribute('cy', String(point.y));
-  return { path, bead, len };
 }
 
 function initHeroSync(reduce: boolean) {
   const stage = document.querySelector('[data-hero-stage]');
   if (!stage) return;
-  const thread = layoutHeroThread();
-  window.addEventListener('resize', () => layoutHeroThread(), { passive: true });
-
   if (reduce) {
     settleHeroReduced();
     return;
@@ -315,22 +262,10 @@ function initHeroSync(reduce: boolean) {
   const chip = document.querySelector<HTMLElement>('[data-sync-chip]');
   const kpi = document.querySelector<HTMLElement>('[data-kpi]');
 
-  gsap.set(bars, { scaleY: 0.28, transformOrigin: 'bottom' });
-  if (chip) gsap.set(chip, { autoAlpha: 0, y: 8 });
-  if (thread) thread.path.style.strokeDashoffset = String(thread.len);
+  gsap.set(bars, { scaleY: 0 });
+  gsap.set(chip, { autoAlpha: 0, y: 8 });
 
-  const placeBead = (progress: number) => {
-    const live = document.querySelector<SVGPathElement>('[data-hero-path]');
-    const bead = document.querySelector<SVGCircleElement>('[data-hero-bead]');
-    if (!live || !bead) return;
-    const len = Number(live.dataset.len || 0);
-    if (!len) return;
-    const point = live.getPointAtLength(len * progress);
-    bead.setAttribute('cx', String(point.x));
-    bead.setAttribute('cy', String(point.y));
-  };
-
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, defaults: { ease: 'power2.out' } });
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.4, defaults: { ease: 'power2.out' } });
   tl.add(() => {
     phoneItems.forEach((el) => el.classList.remove('is-done'));
     dashItems.forEach((el) => {
@@ -342,93 +277,58 @@ function initHeroSync(reduce: boolean) {
         status.className = 'status status-sync';
       }
     });
-    gsap.set(bars, { scaleY: 0.28 });
-    if (chip) gsap.set(chip, { autoAlpha: 0, y: 8 });
-    if (kpi) kpi.textContent = '80%';
-    const live = document.querySelector<SVGPathElement>('[data-hero-path]');
-    if (live?.dataset.len) live.style.strokeDashoffset = live.dataset.len;
-    placeBead(0);
+    gsap.set(bars, { scaleY: 0 });
+    gsap.set(chip, { autoAlpha: 0, y: 8 });
+    if (kpi) kpi.textContent = '92%';
   });
-
-  if (thread) {
-    tl.to(
-      thread.path,
-      {
-        strokeDashoffset: 0,
-        duration: 1.7,
-        ease: 'none',
-        onUpdate() {
-          const live = document.querySelector<SVGPathElement>('[data-hero-path]');
-          const len = Number(live?.dataset.len || 1);
-          const current = Number(gsap.getProperty(thread.path, 'strokeDashoffset'));
-          placeBead(1 - current / len);
-        },
-      },
-      0.15,
-    );
-  }
 
   phoneItems.forEach((item, i) => {
-    tl.to(item, { duration: 0.01, onStart: () => item.classList.add('is-done') }, i * 0.42 + 0.2);
+    tl.to(item, { duration: 0.01, onStart: () => item.classList.add('is-done') }, i * 0.45 + 0.2);
     const dash = dashItems[i];
-    if (!dash) return;
-    tl.to(
-      dash,
-      {
-        duration: 0.35,
-        onStart: () => {
-          dash.classList.add('is-in');
-          const status = dash.querySelector<HTMLElement>('[data-status]');
-          if (!status) return;
-          if (i < 2) {
-            status.textContent = 'Concluído';
-            status.className = 'status status-ok';
-          } else if (i === 2) {
-            status.textContent = 'Em análise';
-            status.className = 'status status-warn';
-          } else {
-            status.textContent = 'Publicado';
-            status.className = 'status status-ok';
-          }
+    if (dash) {
+      tl.to(
+        dash,
+        {
+          duration: 0.35,
+          onStart: () => {
+            dash.classList.add('is-in');
+            const status = dash.querySelector<HTMLElement>('[data-status]');
+            if (!status) return;
+            if (i < 2) {
+              status.textContent = 'Concluído';
+              status.className = 'status status-ok';
+            } else if (i === 2) {
+              status.textContent = 'Em análise';
+              status.className = 'status status-warn';
+            } else {
+              status.textContent = 'Publicado';
+              status.className = 'status status-ok';
+            }
+          },
         },
-      },
-      i * 0.42 + 0.42,
-    );
+        i * 0.45 + 0.45,
+      );
+    }
   });
 
-  tl.to(bars, { scaleY: 1, duration: 1.05, stagger: 0.05, ease: 'power3.out' }, 0.55);
+  tl.to(bars, { scaleY: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out' }, '-=0.2');
   if (kpi) {
-    const proxy = { value: 80 };
-    tl.to(
-      proxy,
+    tl.fromTo(
+      kpi,
+      { textContent: 80 },
       {
-        value: 92,
+        textContent: 92,
         duration: 0.8,
-        snap: { value: 1 },
-        onUpdate: () => {
-          kpi.textContent = `${Math.round(proxy.value)}%`;
+        snap: { textContent: 1 },
+        onUpdate: function () {
+          kpi.textContent = `${Math.round(Number(kpi.textContent))}%`;
         },
       },
-      '-=0.55',
+      '-=0.6',
     );
   }
-  if (chip) tl.to(chip, { autoAlpha: 1, y: 0, duration: 0.4 }, '-=0.3');
-  tl.to({}, { duration: 2.2 });
-
-  const syncHero = () => {
-    const hold = motionPaused() || document.hidden || !ScrollTrigger.isInViewport(stage);
-    if (hold) tl.pause();
-    else tl.play();
-    if (stage instanceof HTMLElement) stage.dataset.heroHold = hold ? '1' : '0';
-  };
-  heroSyncs.push(syncHero);
-  ScrollTrigger.create({
-    trigger: stage,
-    start: 'top bottom',
-    end: 'bottom top',
-    onToggle: syncHero,
-  });
-  document.addEventListener('visibilitychange', syncHero);
+  tl.to(chip, { autoAlpha: 1, y: 0, duration: 0.4 }, '-=0.35');
+  tl.to({}, { duration: 1.8 });
 }
 
 function initHeroSplit(reduce: boolean) {
@@ -450,138 +350,59 @@ function initHeroSplit(reduce: boolean) {
 
   gsap.fromTo(
     title.querySelectorAll('.line-inner'),
-    { yPercent: 112 },
-    { yPercent: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08, delay: 0.05 },
+    { yPercent: 110 },
+    {
+      yPercent: 0,
+      duration: 1,
+      ease: 'power3.out',
+      stagger: 0.1,
+      delay: 0.15,
+    },
   );
 }
 
-function initHeadingMasks(reduce: boolean) {
-  if (reduce) return;
-  document.querySelectorAll<HTMLElement>('main h2').forEach((h2) => {
-    if (h2.hasAttribute('data-word-scrub') || h2.dataset.maskReady === '1') return;
-    const parts = h2.innerHTML.split(/<br\s*\/?>/i).map((part) => part.trim()).filter(Boolean);
-    if (!parts.length) return;
-    h2.replaceChildren();
-    const inners: HTMLElement[] = [];
-    parts.forEach((part) => {
-      const line = document.createElement('span');
-      line.className = 'mask-line';
-      const inner = document.createElement('span');
-      inner.className = 'mask-inner';
-      inner.innerHTML = part;
-      line.appendChild(inner);
-      h2.appendChild(line);
-      inners.push(inner);
-    });
-    h2.dataset.maskReady = '1';
-    gsap.fromTo(
-      inners,
-      { yPercent: 110 },
-      {
-        yPercent: 0,
-        duration: 0.75,
-        ease: 'power3.out',
-        stagger: 0.05,
-        immediateRender: false,
-        scrollTrigger: { trigger: h2, start: 'top 90%', once: true },
-      },
-    );
-  });
-}
-
-function layoutJourneyThread() {
-  const root = document.querySelector<HTMLElement>('[data-journey-steps]');
-  const svg = root?.querySelector<SVGSVGElement>('[data-journey-thread]');
-  const path = svg?.querySelector<SVGPathElement>('[data-journey-path]');
-  const bead = svg?.querySelector<SVGCircleElement>('[data-journey-bead]');
-  if (!root || !svg || !path || !bead) return null;
-  const marks = Array.from(root.querySelectorAll<HTMLElement>('.journey-step .n'));
-  if (marks.length < 2) return null;
-  const box = root.getBoundingClientRect();
-  if (box.width < 8 || box.height < 8) return null;
-  const pts = marks.map((mark) => {
-    const r = mark.getBoundingClientRect();
-    return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
-  });
-  svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
-  let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
-  for (let i = 1; i < pts.length; i++) {
-    const p0 = pts[i - 1];
-    const p1 = pts[i];
-    const my = (p0.y + p1.y) / 2;
-    d += ` C ${p0.x.toFixed(1)} ${my.toFixed(1)}, ${p1.x.toFixed(1)} ${my.toFixed(1)}, ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
-  }
-  path.setAttribute('d', d);
-  const len = path.getTotalLength();
-  path.style.strokeDasharray = `${len}`;
-  path.dataset.len = String(len);
-  return { path, bead, len };
-}
-
 function initJourney(reduce: boolean) {
-  const root = document.querySelector<HTMLElement>('[data-journey-steps]');
+  const root = document.querySelector<HTMLElement>('[data-journey]');
   if (!root) return;
-  const steps = Array.from(root.querySelectorAll<HTMLElement>('[data-journey-step]'));
+  const steps = gsap.utils.toArray<HTMLElement>('[data-journey-step]');
+  const frames = gsap.utils.toArray<HTMLElement>('[data-journey-frame]');
+  const bar = document.querySelector<HTMLElement>('[data-journey-bar]');
   const setActive = (index: number) => {
-    steps.forEach((el, i) => {
-      const on = i === index;
-      el.classList.toggle('is-active', on);
-      el.querySelector('[data-journey-frame]')?.classList.toggle('is-active', on);
-    });
+    steps.forEach((el, i) => el.classList.toggle('is-active', i === index));
+    frames.forEach((el, i) => el.classList.toggle('is-active', i === index));
   };
 
   if (reduce) {
-    steps.forEach((el) => {
-      el.classList.add('is-active');
-      el.querySelector('[data-journey-frame]')?.classList.add('is-active');
-    });
-    const drawn = layoutJourneyThread();
-    if (drawn) drawn.path.style.strokeDashoffset = '0';
-    return;
-  }
-
-  const narrow = window.matchMedia('(max-width: 899px)').matches;
-  if (narrow) {
     setActive(0);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const index = Number((entry.target as HTMLElement).dataset.journeyStep || '0');
-          setActive(index);
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0.15 },
-    );
-    steps.forEach((step) => observer.observe(step));
+    if (bar) bar.style.width = '100%';
     return;
   }
 
-  let metric = layoutJourneyThread();
-  const sync = (progress: number) => {
-    if (!metric) metric = layoutJourneyThread();
-    if (!metric) return;
-    const p = Math.min(1, Math.max(0, progress));
-    metric.path.style.strokeDashoffset = String(metric.len * (1 - p));
-    const point = metric.path.getPointAtLength(Math.max(0.01, metric.len * p));
-    metric.bead.setAttribute('cx', String(point.x));
-    metric.bead.setAttribute('cy', String(point.y));
-    setActive(Math.min(steps.length - 1, Math.floor(p * steps.length * 0.999)));
-  };
-  sync(0);
+  if (window.matchMedia('(max-width: 720px)').matches) {
+    steps.forEach((step, index) => {
+      ScrollTrigger.create({
+        trigger: step,
+        start: 'top 65%',
+        onEnter: () => setActive(index),
+        onEnterBack: () => setActive(index),
+      });
+    });
+    return;
+  }
+
   ScrollTrigger.create({
     trigger: root,
-    start: 'top 55%',
-    end: 'bottom 55%',
-    scrub: 0.4,
-    onUpdate: (self) => sync(self.progress),
+    start: 'top top+=72',
+    end: () => `+=${Math.max(steps.length * 900, 3200)}`,
+    pin: true,
+    scrub: 0.55,
+    anticipatePin: 1,
+    onUpdate: (self) => {
+      const idx = Math.min(steps.length - 1, Math.floor(self.progress * steps.length));
+      setActive(idx);
+      if (bar) bar.style.width = `${Math.max(4, self.progress * 100)}%`;
+    },
   });
-  const relayout = () => {
-    metric = layoutJourneyThread();
-    ScrollTrigger.refresh();
-  };
-  window.addEventListener('resize', relayout, { passive: true });
-  window.addEventListener('load', relayout, { once: true });
 }
 
 function initSophieChat(reduce: boolean) {
@@ -598,18 +419,9 @@ function initSophieChat(reduce: boolean) {
     root.dataset.chatDone = 'true';
   };
 
-  let running: gsap.core.Timeline | null = null;
   const play = () => {
-    if (reduce || root.dataset.chatDone === 'true') {
+    if (reduce) {
       fillAll();
-      return;
-    }
-    if (motionPaused()) {
-      running?.pause();
-      return;
-    }
-    if (running && running.progress() < 1) {
-      running.play();
       return;
     }
     bubbles.forEach((b) => {
@@ -617,63 +429,38 @@ function initSophieChat(reduce: boolean) {
       b.textContent = b.classList.contains('user') ? b.dataset.full || '' : '';
     });
     const tl = gsap.timeline({ onComplete: fillAll });
-    running = tl;
     bubbles.forEach((bubble, i) => {
       const full = bubble.dataset.full || '';
       tl.to(
         bubble,
         {
-          duration: 0.16,
+          duration: 0.18,
           onStart: () => {
             bubble.classList.add('is-in');
             if (bubble.classList.contains('user')) bubble.textContent = full;
           },
         },
-        i === 0 ? 0 : '+=0.18',
+        i === 0 ? 0 : '+=0.2',
       );
       if (bubble.classList.contains('sophie')) {
-        tl.to(
-          {},
-          {
-            duration: Math.min(1.15, Math.max(0.45, full.length * 0.01)),
-            onStart: () => bubble.classList.add('chat-cursor'),
-            onUpdate() {
-              bubble.textContent = full.slice(0, Math.max(1, Math.floor(full.length * this.progress())));
-            },
-            onComplete: () => {
-              bubble.textContent = full;
-              bubble.classList.remove('chat-cursor');
-            },
+        tl.to({}, {
+          duration: Math.max(0.55, full.length * 0.012),
+          onStart: () => bubble.classList.add('chat-cursor'),
+          onUpdate: function () {
+            const p = this.progress();
+            bubble.textContent = full.slice(0, Math.floor(full.length * p));
           },
-        );
+          onComplete: () => {
+            bubble.textContent = full;
+            bubble.classList.remove('chat-cursor');
+          },
+        });
       }
     });
   };
 
-  if (reduce) {
-    play();
-    return;
-  }
-  ScrollTrigger.create({ trigger: root, start: 'top 82%', once: true, onEnter: play });
-  window.addEventListener('sgs-motion-toggle', () => {
-    if (root.dataset.chatDone === 'true') return;
-    if (!motionPaused() && !ScrollTrigger.isInViewport(root)) return;
-    play();
-  });
-}
-
-function initMotionControl() {
-  const input = document.querySelector<HTMLInputElement>('#pausar-movimento');
-  input?.addEventListener('change', () => {
-    heroSyncs.forEach((fn) => fn());
-    window.dispatchEvent(new Event('sgs-motion-toggle'));
-  });
-  const bands = document.querySelectorAll('[data-marquee-band]');
-  if (!bands.length || !('IntersectionObserver' in window)) return;
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => entry.target.classList.toggle('is-offscreen', !entry.isIntersecting));
-  });
-  bands.forEach((band) => observer.observe(band));
+  ScrollTrigger.create({ trigger: root, start: 'top 80%', once: true, onEnter: play });
+  if (reduce) play();
 }
 
 function initCheckDraw(reduce: boolean) {
@@ -700,7 +487,7 @@ function initFooterWordmark(reduce: boolean) {
   }
   ScrollTrigger.create({
     trigger: el,
-    start: 'top 96%',
+    start: 'top 95%',
     once: true,
     onEnter: () => el.classList.add('is-in'),
   });
@@ -708,7 +495,7 @@ function initFooterWordmark(reduce: boolean) {
 
 function initSectionTheme(reduce: boolean) {
   if (reduce) return;
-  document.querySelectorAll<HTMLElement>('.section-dark, .cta-bleed').forEach((section) => {
+  document.querySelectorAll<HTMLElement>('.section-dark, .cta-bleed, .hero-dark').forEach((section) => {
     ScrollTrigger.create({
       trigger: section,
       start: 'top 55%',
@@ -721,22 +508,23 @@ function initSectionTheme(reduce: boolean) {
   });
 }
 
+
 function initWordScrub(reduce: boolean) {
   const root = document.querySelector<HTMLElement>('[data-word-scrub]');
   if (!root) return;
   const words = gsap.utils.toArray<HTMLElement>('[data-word-scrub] [data-word]');
   if (!words.length) return;
+
   if (reduce) {
     words.forEach((w) => w.classList.add('is-lit'));
-    root.classList.remove('is-scrubbing');
     return;
   }
-  root.classList.add('is-scrubbing');
+
   ScrollTrigger.create({
     trigger: root,
-    start: 'top 78%',
-    end: 'bottom 55%',
-    scrub: 0.4,
+    start: 'top 75%',
+    end: 'bottom 45%',
+    scrub: true,
     onUpdate: (self) => {
       const n = Math.round(self.progress * (words.length - 1));
       words.forEach((w, i) => w.classList.toggle('is-lit', i <= n));
@@ -753,53 +541,69 @@ function initShield(reduce: boolean) {
   }
   ScrollTrigger.create({
     trigger: stage,
-    start: 'top 78%',
+    start: 'top 75%',
     once: true,
     onEnter: () => stage.classList.add('is-drawn'),
   });
 }
 
 export function initMotion() {
-  document.documentElement.classList.add('motion-ready');
   const reduce = prefersReduced();
   const fine = hasFinePointer();
 
   initNav();
-  initMotionControl();
-  initNavCurrent();
-  initModulesTabs(reduce);
-  initPreloader();
+  initModulesTabs();
+  initPreloader(reduce);
+  initCursor(fine, reduce);
   initMagnetic(fine, reduce);
   initSpotlight(fine, reduce);
-  initHeroSplit(reduce);
-  initHeroSync(reduce);
-  initHeadingMasks(reduce);
-  initWordScrub(reduce);
-  initJourney(reduce);
-  initSophieChat(reduce);
-  initCheckDraw(reduce);
-  initShield(reduce);
-  initFooterWordmark(reduce);
-  initPassage(reduce);
-  if (!reduce) initSectionTheme(false);
+  initHeroTilt(fine, reduce);
 
-  const allowLenis = !reduce && !isCoarseOrNarrow() && fine;
-  if (!allowLenis) {
-    bindAnchors();
+  document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => el.classList.add('is-visible'));
+
+  if (reduce) {
+    initHeroSync(true);
+    initWordScrub(true);
+    initJourney(true);
+    initSophieChat(true);
+    initCheckDraw(true);
+    initShield(true);
+    initFooterWordmark(true);
     return;
   }
 
-  const lenis = new Lenis({
-    duration: 0.9,
-    smoothWheel: true,
-    syncTouch: false,
-    autoRaf: false,
-    anchors: false,
-  });
+  const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
-  bindAnchors(lenis);
+
+  document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
+    el.classList.remove('is-visible');
+    gsap.fromTo(
+      el,
+      { autoAlpha: 0, y: 28 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+      },
+    );
+  });
+
+  const stage = document.querySelector('[data-hero-stage]');
+  if (stage) {
+    gsap.fromTo(stage, { autoAlpha: 0, y: 36 }, { autoAlpha: 1, y: 0, duration: 1.05, ease: 'power3.out', delay: 0.2 });
+  }
+
+  initHeroSplit(false);
+  initHeroSync(false);
+  initWordScrub(false);
+  initJourney(false);
+  initSophieChat(false);
+  initCheckDraw(false);
+  initShield(false);
+  initFooterWordmark(false);
+  initSectionTheme(false);
 }

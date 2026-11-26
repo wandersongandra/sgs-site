@@ -2907,3 +2907,7 @@ main,
 }
 /* Pass 3: module card subtitle readable */
 .mod-card .full { font-size: 0.78rem; font-weight: 600; color: var(--blue-core); }
+
+/* Pass 4: section intro on dark backgrounds was dark-on-navy */
+.section-dark .section-head p { color: rgba(252, 254, 255, 0.84); }
+.display-cta { max-width: 18ch; }

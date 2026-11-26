@@ -6,7 +6,7 @@ import { journeySteps } from '../data/content';
   <div class="container">
     <div class="section-head reveal">
       <h2 id="jornada-title">Do campo ao painel, o registro não se perde.</h2>
-      <p>O técnico registra no celular. A assinatura fica no documento. A evidência chega à auditoria. O gestor acompanha no painel.</p>
+      <p>O técnico registra no celular, a assinatura fica no documento e o gestor acompanha no painel. Role para ver cada etapa.</p>
     </div>
 
     <div class="journey-pin" data-journey>
@@ -15,7 +15,7 @@ import { journeySteps } from '../data/content';
       </div>
 
       <div class="journey-steps" data-journey-steps>
-        <p class="journey-kicker">O caminho do registro</p>
+        <p class="journey-kicker">Quatro etapas</p>
         {
           journeySteps.map((step, i) => (
             <article class:list={['journey-step', i === 0 && 'is-active']} data-journey-step={i}>

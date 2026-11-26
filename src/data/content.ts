@@ -221,17 +221,12 @@ export const journeySteps = [
   },
   {
     n: '02',
-    title: 'Assina e aprova',
-    text: 'O fluxo de aprovação e assinatura deixa claro quem validou e quando.',
+    title: 'Assina e arquiva',
+    text: 'O fluxo de aprovação e assinatura deixa o registro pronto para auditoria.',
   },
   {
     n: '03',
-    title: 'Vira evidência',
-    text: 'O registro entra no acervo, no relatório ou na tratativa, pronto para auditoria.',
-  },
-  {
-    n: '04',
-    title: 'Aparece nos indicadores',
+    title: 'Acompanha no painel',
     text: 'Gestores veem pendências e conformidade sem montar planilha na mão.',
   },
 ] as const;

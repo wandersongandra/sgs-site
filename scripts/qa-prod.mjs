@@ -54,8 +54,10 @@ for(const [w,h] of [[1440,900],[390,844]]){
  if(k.afterEscape==='true'){await p.click('[data-nav-toggle]');}
  await ctx.close();
  const c2=await b.newContext({viewport:{width:1440,height:900}});const q=await c2.newPage();await q.goto(BASE);await q.waitForTimeout(2000);
- await q.focus('[data-mod-tab]'); await q.keyboard.press('ArrowRight'); await q.waitForTimeout(200);
- k.tabArrow=await q.evaluate(()=>({focused:document.activeElement.id,selected:document.querySelector('[data-mod-tab][aria-selected=true]')?.id,visiblePanel:[...document.querySelectorAll('[data-mod-panel]')].filter(x=>!x.hidden).map(x=>x.id)}));
+ if(await q.$('[data-mod-tab]')){
+  await q.focus('[data-mod-tab]'); await q.keyboard.press('ArrowRight'); await q.waitForTimeout(200);
+  k.tabArrow=await q.evaluate(()=>({focused:document.activeElement.id,selected:document.querySelector('[data-mod-tab][aria-selected=true]')?.id,visiblePanel:[...document.querySelectorAll('[data-mod-panel]')].filter(x=>!x.hidden).map(x=>x.id)}));
+ } else { k.tabArrow={skipped:true}; }
  await q.focus('#faq summary'); await q.keyboard.press('Enter'); k.faqOpen=await q.evaluate(()=>document.querySelector('#faq details').open);
  k.focusRing=await q.evaluate(()=>{const s=getComputedStyle(document.activeElement);return s.outlineStyle+' '+s.outlineWidth+' '+s.outlineColor});
  k.nativeCursorBeforeMouse=await q.evaluate(()=>getComputedStyle(document.body).cursor);

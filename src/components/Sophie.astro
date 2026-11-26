@@ -8,7 +8,7 @@ import { sophieTasks, sophieChat } from '../data/content';
       <p class="eyebrow">Sophie IA</p>
       <h2 id="sophie-title">Sophie, a assistência de IA do SGS.</h2>
       <p>
-        Ajuda a analisar APR e PT, sugerir DDS, ler checklists e consultar dados da empresa, com controle de acesso e cuidado com informações sensíveis.
+        Ajuda a analisar APR e PT, sugerir DDS, ler checklists e consultar dados da empresa, com controle de acesso.
       </p>
     </div>
 
@@ -26,17 +26,10 @@ import { sophieTasks, sophieChat } from '../data/content';
         </div>
       </div>
 
-      <div
-        class="chat reveal"
-        data-sophie-chat
-        data-chat={JSON.stringify(sophieChat)}
-        aria-label="Demonstração ilustrativa de conversa"
-      >
+      <div class="chat reveal" aria-label="Demonstração ilustrativa de conversa">
         {
-          sophieChat.map((m, i) => (
-            <div class={`chat-bubble ${m.role} is-in`} data-chat-bubble={i} data-full={m.text}>
-              {m.text}
-            </div>
+          sophieChat.map((m) => (
+            <div class={`chat-bubble ${m.role} is-in`}>{m.text}</div>
           ))
         }
       </div>

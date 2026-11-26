@@ -7,7 +7,7 @@ export const site = {
   shortName: 'SGS',
   title: 'SGS Segurança | Gestão de Segurança do Trabalho',
   description:
-    'Sistema para gestão de Segurança e Saúde do Trabalho: análise de risco, permissão de trabalho, checklists, documentos, treinamentos, exames e indicadores — com uso em campo e Sophie IA.',
+    'Sistema para gestão de Segurança e Saúde do Trabalho: análise de risco, permissão de trabalho, checklists, documentos, treinamentos, exames e indicadores, com uso em campo e Sophie IA.',
   locale: 'pt-BR',
   url: 'https://sgsseguranca.com.br',
   appLoginUrl: 'https://app.sgsseguranca.com.br/login',

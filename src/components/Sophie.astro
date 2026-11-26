@@ -4,16 +4,16 @@ import { sophieTasks, sophieChat } from '../data/content';
 
 <section class="section section-soft" id="sophie" aria-labelledby="sophie-title">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Sophie IA</p>
-      <h2 id="sophie-title">Uma assistente que fala a língua da segurança do trabalho.</h2>
+      <h2 id="sophie-title">Sophie, a assistência de IA do SGS.</h2>
       <p>
-        Análise e apoio com dados da sua empresa, com controle de acesso e cuidado com informações sensíveis.
+        Ajuda a analisar APR e PT, sugerir DDS, ler checklists e consultar dados da empresa, com controle de acesso e cuidado com informações sensíveis.
       </p>
     </div>
 
     <div class="sophie-grid">
-      <div class="sophie-intro">
+      <div class="sophie-intro reveal">
         <img src="/sophie-avatar.svg" alt="" width="72" height="72" />
         <div>
           <h3 style="font-size:1.35rem; margin-bottom:0.4rem;">Sophie</h3>
@@ -27,7 +27,7 @@ import { sophieTasks, sophieChat } from '../data/content';
       </div>
 
       <div
-        class="chat"
+        class="chat reveal"
         data-sophie-chat
         data-chat={JSON.stringify(sophieChat)}
         aria-label="Demonstração ilustrativa de conversa"

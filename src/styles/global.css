@@ -2892,3 +2892,18 @@ main,
 .faq details[open] summary::after { content: "\2212"; }
 .faq details { padding: 1rem 1.15rem; }
 .faq p { line-height: 1.6; max-width: 40rem; }
+
+/* Pass 3: mobile hero mock uses the full width once the side nav is hidden */
+@media (max-width: 720px) {
+  .hero.hero-dark .dash-lg .dash-body { grid-template-columns: minmax(0, 1fr); }
+  .hero.hero-dark .dash-top { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); }
+  .hero.hero-dark .hero-stage { padding-left: 0.5rem; padding-right: 0.5rem; }
+  /* module cards: icon beside the name, shorter cards */
+  .mod-card { min-height: 0; grid-template-columns: 2rem minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 0.75rem; padding: 0.95rem 1rem; }
+  .mod-card .icon { grid-row: 1; width: 1.6rem; height: 1.6rem; margin-top: 0.1rem; }
+  .mod-card > div { grid-column: 2; }
+  .mod-card p { grid-column: 2; }
+  .mod-bento { gap: 0.6rem; }
+}
+/* Pass 3: module card subtitle readable */
+.mod-card .full { font-size: 0.78rem; font-weight: 600; color: var(--blue-core); }

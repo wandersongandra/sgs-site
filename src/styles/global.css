@@ -2868,3 +2868,27 @@ main,
 /* Pass 1: with reduced motion the shield is shown drawn, not left invisible */
 .reduce-motion .shield-outline, .reduce-motion .shield-lock,
 .reduce-motion .shield-lock-body, .reduce-motion .shield-check { stroke-dashoffset: 0; }
+
+/* Pass 2: audience as a role list, not five cramped cards */
+.audience { padding-top: clamp(1rem, 3vw, 2rem); }
+.audience-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.audience-layout .section-head { margin-bottom: 0; position: sticky; top: 6rem; }
+.audience-layout .section-head h2 { text-wrap: balance; max-width: 16ch; }
+.role-list { margin: 0; border-top: 1px solid var(--line); }
+.role-row { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 1.25rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.role-row dt { font-weight: 700; color: var(--blue-deep); font-size: 1.02rem; }
+.role-row dd { margin: 0; color: var(--ink-muted); line-height: 1.55; }
+@media (max-width: 900px) {
+  .audience-layout { grid-template-columns: 1fr; }
+  .audience-layout .section-head { position: static; }
+  .role-row { grid-template-columns: 1fr; gap: 0.3rem; }
+}
+/* Pass 2: security cards share a height per row */
+.security-stage { align-items: stretch; }
+.sec-card { display: flex; flex-direction: column; justify-content: center; }
+/* Pass 2: FAQ reads as text, not as tiny labels */
+.faq summary { font-size: 1.02rem; font-weight: 650; padding-right: 1.5rem; position: relative; }
+.faq summary::after { float: none; position: absolute; right: 0; top: 0; color: var(--blue-core); font-size: 1.15rem; line-height: 1.3; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details { padding: 1rem 1.15rem; }
+.faq p { line-height: 1.6; max-width: 40rem; }

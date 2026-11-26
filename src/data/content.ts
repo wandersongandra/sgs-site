@@ -278,11 +278,11 @@ export const securityPoints = [
 
 export const faqs = [
   {
-    q: 'O SGS é um aplicativo de celular?',
-    a: 'É um sistema web, usado no celular pelo navegador. O técnico trabalha no modo campo, inclusive offline nos módulos preparados. Não há aplicativo nativo separado neste produto.',
+    q: 'Precisa instalar aplicativo?',
+    a: 'Não. O SGS roda no navegador, no computador ou no celular. No celular, o técnico usa o modo campo, inclusive offline nos módulos preparados.',
   },
   {
-    q: 'Dá para trabalhar sem internet?',
+    q: 'Funciona sem internet?',
     a: 'Sim, na APR, na PT, nos checklists e nas não conformidades: dá para ler e registrar sem conexão e sincronizar depois. Outros módulos só consultam o que já estiver no aparelho ou pedem internet.',
   },
   {
@@ -290,15 +290,15 @@ export const faqs = [
     a: 'Sophie é a assistência de IA do SGS. Analisa APR e PT, sugere DDS, lê checklists e consulta dados da empresa, com controle de acesso. O que ela gera é rascunho para alguém revisar.',
   },
   {
-    q: 'Como funciona a verificação de documentos?',
+    q: 'Como alguém confere se um PDF é verdadeiro?',
     a: 'Documentos do sistema podem ser conferidos em páginas públicas de verificação, para validar autenticidade sem abrir o restante da operação.',
   },
   {
-    q: 'Quais planos e preços existem?',
-    a: 'Os planos são sob consulta. Fale no WhatsApp para entender o cenário da sua operação.',
+    q: 'Quanto custa?',
+    a: 'Os planos são sob consulta. Chame no WhatsApp e conte o tamanho da operação.',
   },
   {
-    q: 'Onde acesso o sistema?',
+    q: 'Onde fica o login?',
     a: 'Em app.sgsseguranca.com.br. Este site apresenta o produto; o login fica no endereço do aplicativo.',
   },
 ] as const;
@@ -310,7 +310,7 @@ export const valuePoints = [
   },
   {
     title: 'Evidência que aguenta fiscalização',
-    text: 'A evidência feita no campo tem de chegar intacta à auditoria: aprovação, anexo, foto e histórico no próprio registro.',
+    text: 'Aprovação, anexo, foto e histórico ficam no próprio registro, prontos para auditoria e fiscalização.',
   },
   {
     title: 'Cada empresa isolada',

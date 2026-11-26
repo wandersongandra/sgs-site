@@ -2,20 +2,21 @@
 import { audiences } from '../data/content';
 ---
 
-<section class="section audience" style="padding-top: 0;" aria-labelledby="publico-title">
-  <div class="container">
+<section class="section audience" aria-labelledby="publico-title">
+  <div class="container audience-layout">
     <div class="section-head reveal">
-      <h2 id="publico-title" style="text-wrap:balance; max-width:18ch;">Do técnico na planta ao gestor no painel.</h2>
+      <h2 id="publico-title">Do técnico na planta ao gestor no painel.</h2>
+      <p>Cada perfil vê e faz o que a função pede.</p>
     </div>
-    <div class="audience-grid">
+    <dl class="role-list">
       {
         audiences.map((a) => (
-          <article class="card reveal" data-spotlight>
-            <h3>{a.title}</h3>
-            <p>{a.text}</p>
-          </article>
+          <div class="role-row reveal" data-spotlight>
+            <dt>{a.title}</dt>
+            <dd>{a.text}</dd>
+          </div>
         ))
       }
-    </div>
+    </dl>
   </div>
 </section>

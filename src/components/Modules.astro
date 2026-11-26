@@ -1,52 +1,15 @@
 ---
 import { moduleGroups } from '../data/content';
-import ModuleIcon from './ModuleIcon.astro';
-
-const mockRows: Record<string, { title: string; status: string; tone: string }[]> = {
-  campo: [
-    { title: 'APR · Altura', status: 'Aprovada', tone: 'ok' },
-    { title: 'PT · Confinado', status: 'Em análise', tone: 'warn' },
-    { title: 'Checklist EPI', status: 'Concluído', tone: 'ok' },
-    { title: 'DDS manhã', status: 'Publicado', tone: 'ok' },
-  ],
-  gestao: [
-    { title: 'NC · Guarda-corpo', status: 'Em tratativa', tone: 'warn' },
-    { title: 'Auditoria interna', status: 'Agendada', tone: 'sync' },
-    { title: 'Ação corretiva #18', status: 'No prazo', tone: 'ok' },
-    { title: 'CAT registrada', status: 'Arquivada', tone: 'ok' },
-  ],
-  saude: [
-    { title: 'Treinamento NR-35', status: 'Vence em 12d', tone: 'warn' },
-    { title: 'Exame periódico', status: 'Em dia', tone: 'ok' },
-    { title: 'EPI · Capacete', status: 'Entregue', tone: 'ok' },
-    { title: 'Calendário SST', status: '3 eventos', tone: 'sync' },
-  ],
-  docs: [
-    { title: 'PT assinada.pdf', status: 'v2', tone: 'ok' },
-    { title: 'APR altura.pdf', status: 'Assinar', tone: 'warn' },
-    { title: 'Verificação pública', status: 'Ativa', tone: 'ok' },
-    { title: 'Importação assistida', status: 'Pronta', tone: 'sync' },
-  ],
-  relatorios: [
-    { title: 'Conformidade', status: '96%', tone: 'ok' },
-    { title: 'Relatório fotográfico', status: '12 fotos', tone: 'sync' },
-    { title: 'RDO · Ontem', status: 'Enviado', tone: 'ok' },
-    { title: 'Pendências abertas', status: '4', tone: 'warn' },
-  ],
-};
 ---
 
-<section class="section section-soft" id="modulos" aria-labelledby="modulos-title">
+<section class="section" id="modulos" aria-labelledby="modulos-title">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">Módulos</p>
-      <h2 id="modulos-title">Módulos do sistema.</h2>
-      <p>APR, PT, checklists, documentos, treinamentos e indicadores, organizados por área.</p>
+      <h2 id="modulos-title">O que o SGS cobre</h2>
+      <p>Os registros da operação, organizados por área.</p>
     </div>
 
-    <div class="modules-pin">
     <div class="mod-tabs reveal" role="tablist" aria-label="Áreas do SGS" data-mod-tabs>
-      <span class="mod-tab-indicator" data-mod-indicator aria-hidden="true"></span>
       {
         moduleGroups.map((group, i) => (
           <button
@@ -74,34 +37,20 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
           data-mod-panel={group.id}
           hidden={i !== 0}
         >
-          <div class="mod-mock">
-            <div class="label">{group.mockLabel} · exemplo ilustrativo</div>
-            <h3>{group.title}</h3>
-            <p style="margin:0 0 1rem; opacity:0.85;">{group.lead}</p>
-            <div class="mod-mock-list">
-              {(mockRows[group.id] || []).map((row) => (
-                <div class="mod-mock-row">
-                  <span>{row.title}</span>
-                  <span class={`status status-${row.tone}`}>{row.status}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="mod-bento" data-cols={group.items.length === 6 ? '3' : '2'}>
+          <p class="mod-lead">{group.lead}</p>
+          <ul class="mod-list">
             {group.items.map((item) => (
-              <article class="mod-card" data-spotlight>
-                <ModuleIcon name={item.icon} />
+              <li>
                 <div>
-                  <h3>{item.name}</h3>
-                  {item.full !== item.name && <div class="full">{item.full}</div>}
+                  <strong>{item.name}</strong>
+                  {item.full !== item.name && <span class="full">{item.full}</span>}
                 </div>
                 <p>{item.desc}</p>
-              </article>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       ))
     }
-    </div>
   </div>
 </section>

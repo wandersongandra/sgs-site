@@ -1,118 +1,58 @@
 ---
-import { site, whatsappUrl } from '../config';
+import { whatsappUrl } from '../config';
 import WaIcon from './WaIcon.astro';
 ---
 
-<section class="hero hero-dark" id="topo" data-hero aria-labelledby="hero-title">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-mesh"></div>
-    <div class="hero-grid-lines"></div>
-  </div>
-
+<section class="hero" id="topo" data-hero aria-labelledby="hero-title">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow eyebrow-on-dark">Segurança e Saúde do Trabalho</p>
-      <h1 id="hero-title" class="display-hero">
-        <span class="hero-line">Do checklist no celular</span>
-        <span class="hero-line">ao painel de conformidade.</span>
-      </h1>
-      <p class="lede lede-on-dark">
-        O SGS reúne análise de risco, permissão de trabalho, checklists, documentos, treinamentos e indicadores, no campo e no escritório.
+      <h1 id="hero-title">Do checklist no celular ao painel de conformidade.</h1>
+      <p class="lede">
+        Sistema de gestão de Segurança e Saúde do Trabalho. O técnico registra no celular; o gestor acompanha a conformidade no painel.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-light" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+        <a class="btn btn-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
           <WaIcon />
           Falar no WhatsApp
         </a>
       </div>
-      <div class="hero-meta" aria-label="Destaques">
-        <span class="pill pill-on-dark">Funciona no celular</span>
-        <span class="pill pill-on-dark">Offline em APR, PT, checklists e NCs</span>
-        <span class="pill pill-on-dark">{site.plansLabel}</span>
-      </div>
     </div>
 
-    <div class="hero-visual">
-      <div class="hero-stage" aria-hidden="true">
-        <div class="dash dash-lg" data-dash>
-          <div class="dash-chrome">
-            <span class="dash-dot"></span>
-            <span class="dash-dot"></span>
-            <span class="dash-dot"></span>
-            <span class="dash-url">app.sgsseguranca.com.br</span>
+    <figure class="hero-figure">
+      <div class="app-frame" aria-hidden="true">
+        <div class="app-chrome">app.sgsseguranca.com.br</div>
+        <div class="app-body">
+          <div class="app-row">
+            <div>
+              <strong>APR · Trabalho em altura</strong>
+              <div class="meta">Aguardando aprovação</div>
+            </div>
+            <span class="status status-warn">Pendente</span>
           </div>
-          <div class="dash-body">
-            <aside class="dash-nav">
-              <div class="nav-item is-active">Painel</div>
-              <div class="nav-item">APR</div>
-              <div class="nav-item">PT</div>
-              <div class="nav-item">Checklists</div>
-              <div class="nav-item">Documentos</div>
-              <div class="nav-item">Indicadores</div>
-            </aside>
-            <div class="dash-main">
-              <div class="dash-top">
-                <div class="dash-kpi">
-                  <strong>92%</strong>
-                  <span>Conformidade do período</span>
-                </div>
-                <div class="dash-chart">
-                  <div class="label">Pendências por dia</div>
-                  <div class="chart-bars">
-                    <span style="--h:42%"></span>
-                    <span style="--h:68%"></span>
-                    <span style="--h:54%"></span>
-                    <span style="--h:80%"></span>
-                    <span style="--h:36%"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="dash-list">
-                <div class="dash-item">
-                  <span class="title">Checklist EPI</span>
-                  <span class="status status-ok">Concluído</span>
-                </div>
-                <div class="dash-item">
-                  <span class="title">APR · Altura</span>
-                  <span class="status status-ok">Concluído</span>
-                </div>
-                <div class="dash-item">
-                  <span class="title">PT · Confinado</span>
-                  <span class="status status-warn">Em análise</span>
-                </div>
-                <div class="dash-item">
-                  <span class="title">DDS · Manhã</span>
-                  <span class="status status-ok">Publicado</span>
-                </div>
-              </div>
+          <div class="app-row">
+            <div>
+              <strong>PT · Espaço confinado</strong>
+              <div class="meta">Em análise do responsável</div>
             </div>
+            <span class="status status-warn">Em análise</span>
           </div>
-        </div>
-
-        <div class="phone phone-lg">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <h4>Checklist de campo</h4>
-            <div class="phone-item is-done">
-              <span class="phone-check">✓</span>
-              <span>Capacete e óculos</span>
+          <div class="app-row">
+            <div>
+              <strong>Checklist de EPI</strong>
+              <div class="meta">Preenchido no campo, com foto</div>
             </div>
-            <div class="phone-item is-done">
-              <span class="phone-check">✓</span>
-              <span>Luva e calçado</span>
+            <span class="status status-ok">Concluído</span>
+          </div>
+          <div class="app-row">
+            <div>
+              <strong>DDS do turno</strong>
+              <div class="meta">Publicado para a equipe</div>
             </div>
-            <div class="phone-item is-done">
-              <span class="phone-check">✓</span>
-              <span>Área sinalizada</span>
-            </div>
-            <div class="phone-item is-done">
-              <span class="phone-check">✓</span>
-              <span>Foto da evidência</span>
-            </div>
+            <span class="status status-ok">Publicado</span>
           </div>
         </div>
       </div>
-      <p class="hero-caption">Exemplo ilustrativo de interface.</p>
-    </div>
+      <figcaption>Exemplo de interface, sem dados de cliente.</figcaption>
+    </figure>
   </div>
 </section>

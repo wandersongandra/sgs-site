@@ -17,12 +17,16 @@ import { sophieTasks, sophieChat } from '../data/content';
     </div>
 
     <div class="chat reveal" aria-label="Demonstração ilustrativa de conversa">
-      <p class="chat-note">Exemplo ilustrativo, sem dados de cliente.</p>
-      {
-        sophieChat.map((m) => (
-          <div class={`chat-bubble ${m.role}`}>{m.text}</div>
-        ))
-      }
+      <div class="chat-bar">Sophie</div>
+      <div class="chat-body">
+        <p class="chat-note">Exemplo ilustrativo, sem dados de cliente.</p>
+        {
+          sophieChat.map((m) => (
+            <div class={`chat-bubble ${m.role}`}>{m.text}</div>
+          ))
+        }
+      </div>
+      <div class="chat-compose" aria-hidden="true">Pergunte sobre APR, PT ou checklists</div>
     </div>
   </div>
 </section>

@@ -115,15 +115,19 @@ function initReveal(reduce: boolean) {
 }
 
 function initParallax(reduce: boolean) {
-  const el = document.querySelector<HTMLElement>('[data-parallax]');
-  if (!el || reduce) return;
-  const max = 24;
+  const layers = [
+    { el: document.querySelector<HTMLElement>('[data-parallax]'), factor: 0.08, max: 24 },
+    { el: document.querySelector<HTMLElement>('[data-parallax-slow]'), factor: 0.05, max: 16 },
+  ].filter((l) => l.el);
+  if (!layers.length || reduce) return;
   let ticking = false;
   const update = () => {
     ticking = false;
     const y = window.scrollY;
-    const t = Math.max(-max, Math.min(max, y * 0.08));
-    el.style.transform = `translate3d(0, ${t}px, 0)`;
+    for (const layer of layers) {
+      const t = Math.max(-layer.max, Math.min(layer.max, y * layer.factor));
+      layer.el!.style.transform = `translate3d(0, ${t}px, 0)`;
+    }
   };
   const onScroll = () => {
     if (ticking) return;

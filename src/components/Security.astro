@@ -7,15 +7,15 @@ import { securityPoints } from '../data/content';
     <div class="section-head reveal">
       <h2 id="seguranca-title">Cada empresa no seu espaço. Cada acesso, no controle.</h2>
     </div>
-    <ul class="security-list">
+    <dl class="spec-list">
       {
         securityPoints.map((s) => (
-          <li class="reveal">
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </li>
+          <div class="reveal">
+            <dt>{s.title}</dt>
+            <dd>{s.text}</dd>
+          </div>
         ))
       }
-    </ul>
+    </dl>
   </div>
 </section>

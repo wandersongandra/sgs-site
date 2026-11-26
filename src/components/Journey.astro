@@ -2,17 +2,18 @@
 import { journeySteps } from '../data/content';
 ---
 
-<section class="section" id="jornada" aria-labelledby="jornada-title">
+<section class="section theme-navy" id="jornada" aria-labelledby="jornada-title">
   <div class="container">
     <div class="section-head reveal">
-      <h2 id="jornada-title">Como funciona</h2>
+      <h2 id="jornada-title">Do campo ao painel.</h2>
+      <p>O registro sai do celular do técnico e chega pronto para a auditoria.</p>
     </div>
     <ol class="steps">
       {
         journeySteps.map((step) => (
           <li class="reveal">
             <div class="n">{step.n}</div>
-            <div>
+            <div class="step-body">
               <h3>{step.title}</h3>
               <p>{step.text}</p>
             </div>

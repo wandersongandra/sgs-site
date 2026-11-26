@@ -5,10 +5,14 @@ import WaIcon from './WaIcon.astro';
 
 <section class="hero" id="topo" data-hero aria-labelledby="hero-title">
   <div class="container hero-grid">
+    <h1 id="hero-title">
+      <span class="h-line">A evidência feita no campo </span>
+      <span class="h-line">tem de chegar intacta </span>
+      <span class="h-line">à auditoria.</span>
+    </h1>
     <div class="hero-copy">
-      <h1 id="hero-title">Do checklist no celular ao painel de conformidade.</h1>
       <p class="lede">
-        Sistema de gestão de Segurança e Saúde do Trabalho. O técnico registra no celular; o gestor acompanha a conformidade no painel.
+        Papel some. Assinatura fica na prancheta. Planilha não guarda o rastro que a fiscalização pede. No SGS, o técnico registra APR, PT e checklist no celular; o gestor acompanha pendências, documentos e conformidade no painel.
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
@@ -19,36 +23,45 @@ import WaIcon from './WaIcon.astro';
     </div>
 
     <figure class="hero-figure">
-      <div class="app-frame" aria-hidden="true">
+      <div class="app-frame" aria-hidden="true" data-parallax>
         <div class="app-chrome">app.sgsseguranca.com.br</div>
-        <div class="app-body">
-          <div class="app-row">
-            <div>
-              <strong>APR · Trabalho em altura</strong>
-              <div class="meta">Aguardando aprovação</div>
-            </div>
-            <span class="status status-warn">Pendente</span>
+        <div class="app-shell">
+          <div class="app-side">
+            <span class="is-current">Pendências</span>
+            <span>Campo</span>
+            <span>Documentos</span>
+            <span>Saúde</span>
           </div>
-          <div class="app-row">
-            <div>
-              <strong>PT · Espaço confinado</strong>
-              <div class="meta">Em análise do responsável</div>
+          <div class="app-main">
+            <div class="app-toolbar">Pendências</div>
+            <div class="app-row">
+              <div>
+                <strong>APR · Trabalho em altura</strong>
+                <div class="meta">Aguardando aprovação</div>
+              </div>
+              <span class="status status-warn">Pendente</span>
             </div>
-            <span class="status status-warn">Em análise</span>
-          </div>
-          <div class="app-row">
-            <div>
-              <strong>Checklist de EPI</strong>
-              <div class="meta">Preenchido no campo, com foto</div>
+            <div class="app-row">
+              <div>
+                <strong>PT · Espaço confinado</strong>
+                <div class="meta">Em análise do responsável</div>
+              </div>
+              <span class="status status-warn">Em análise</span>
             </div>
-            <span class="status status-ok">Concluído</span>
-          </div>
-          <div class="app-row">
-            <div>
-              <strong>DDS do turno</strong>
-              <div class="meta">Publicado para a equipe</div>
+            <div class="app-row">
+              <div>
+                <strong>Checklist de EPI</strong>
+                <div class="meta">Preenchido no campo, com foto</div>
+              </div>
+              <span class="status status-ok">Concluído</span>
             </div>
-            <span class="status status-ok">Publicado</span>
+            <div class="app-row">
+              <div>
+                <strong>DDS do turno</strong>
+                <div class="meta">Publicado para a equipe</div>
+              </div>
+              <span class="status status-ok">Publicado</span>
+            </div>
           </div>
         </div>
       </div>

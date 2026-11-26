@@ -29,6 +29,9 @@ function initNav() {
       toggle?.focus();
     }
   });
+  window.addEventListener('resize', () => {
+    if (window.matchMedia('(min-width: 721px)').matches) setOpen(false);
+  });
 }
 
 function initModulesTabs() {
@@ -111,10 +114,31 @@ function initReveal(reduce: boolean) {
   els.forEach((el) => io.observe(el));
 }
 
+function initParallax(reduce: boolean) {
+  const el = document.querySelector<HTMLElement>('[data-parallax]');
+  if (!el || reduce) return;
+  const max = 24;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY;
+    const t = Math.max(-max, Math.min(max, y * 0.08));
+    el.style.transform = `translate3d(0, ${t}px, 0)`;
+  };
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 export function initMotion() {
   const reduce = prefersReduced();
   initNav();
   initModulesTabs();
   initReveal(reduce);
+  initParallax(reduce);
   document.documentElement.classList.add('motion-ready');
 }

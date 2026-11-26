@@ -4,7 +4,7 @@ export const moduleGroups = [
   {
     id: 'campo',
     title: 'Campo e operação',
-    lead: 'Registros da frente de trabalho, com aprovação e evidências.',
+    lead: 'O que acontece na frente de trabalho entra com evidência e segue para aprovação.',
     mockLabel: 'Rotina de campo',
     items: [
       {
@@ -150,7 +150,7 @@ export const moduleGroups = [
       {
         name: 'Relatórios',
         full: 'Central de relatórios',
-        desc: 'Saídas operacionais consolidadas.',
+        desc: 'Relatórios da operação, reunidos para consulta.',
         icon: 'report',
       },
       {
@@ -168,7 +168,7 @@ export const moduleGroups = [
       {
         name: 'Indicadores',
         full: 'Indicadores',
-        desc: 'Visão executiva de conformidade.',
+        desc: 'Indicadores de conformidade da operação.',
         icon: 'chart',
       },
     ],
@@ -179,17 +179,17 @@ export const journeySteps = [
   {
     n: '01',
     title: 'Registra no campo',
-    text: 'O técnico preenche checklist, APR ou PT no celular, com foto e observação.',
+    text: 'O técnico preenche APR, PT ou checklist no celular, com foto e observação.',
   },
   {
     n: '02',
     title: 'Assina e arquiva',
-    text: 'O fluxo de aprovação e assinatura deixa o registro pronto para auditoria.',
+    text: 'A aprovação e a assinatura ficam no próprio registro. O rastro não depende de um papel que precisa voltar do campo.',
   },
   {
     n: '03',
     title: 'Acompanha no painel',
-    text: 'O gestor acompanha pendências e conformidade no painel.',
+    text: 'O gestor vê pendências, vencimentos e conformidade no mesmo sistema em que o campo registrou.',
   },
 ] as const;
 
@@ -205,23 +205,23 @@ export const sophieChat = [
   { role: 'user', text: 'Quais APRs de altura estão pendentes de aprovação?' },
   {
     role: 'sophie',
-    text: 'Encontrei 3 APRs de trabalho em altura aguardando aprovação. Quer que eu resuma os riscos mais citados?',
+    text: 'Há APRs de trabalho em altura aguardando aprovação. Quer que eu resuma os riscos mais citados?',
   },
   { role: 'user', text: 'Sim, e sugira um DDS curto para o turno da tarde.' },
   {
     role: 'sophie',
-    text: 'Riscos mais citados: queda, ancoragem e clima. Preparei um rascunho de DDS focado nesses três pontos.',
+    text: 'Os riscos mais citados são queda, ancoragem e clima. Preparei um rascunho de DDS focado nesses pontos.',
   },
 ] as const;
 
 export const securityPoints = [
   {
-    title: 'Cada cliente no seu espaço',
+    title: 'Cada empresa no seu espaço',
     text: 'Consultas, arquivos e relatórios ficam isolados entre empresas. O banco reforça esse limite.',
   },
   {
     title: 'Proteção de dados',
-    text: 'Dados pessoais apenas o necessário. Informações de saúde com acesso restrito, em linha com a LGPD.',
+    text: 'Dados pessoais apenas o necessário. Informações de saúde ocupacional com acesso restrito, em linha com a LGPD.',
   },
   {
     title: 'Acesso protegido',
@@ -236,7 +236,7 @@ export const securityPoints = [
 export const faqs = [
   {
     q: 'O SGS é um aplicativo de celular?',
-    a: 'É um sistema web que funciona bem no celular. Técnicos usam o modo campo no navegador, com uso offline nos módulos preparados. Não há app nativo separado neste produto.',
+    a: 'É um sistema web, usado no celular pelo navegador. O técnico trabalha no modo campo, inclusive offline nos módulos preparados. Não há aplicativo nativo separado neste produto.',
   },
   {
     q: 'Dá para trabalhar sem internet?',

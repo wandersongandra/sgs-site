@@ -4,16 +4,23 @@ import { securityPoints } from '../data/content';
 
 <section class="section security-section" id="seguranca" aria-labelledby="seguranca-title">
   <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Confiança</p>
-      <h2 id="seguranca-title">Segurança e privacidade no desenho do produto.</h2>
-      <p>
-        Contatos do produto: suporte@sgsseguranca.com.br e privacidade@sgsseguranca.com.br /
-        dpo@sgsseguranca.com.br.
-      </p>
+    <div class="section-head reveal">
+      <p class="eyebrow">Segurança e privacidade</p>
+      <h2 id="seguranca-title">Isolamento entre empresas, acesso controlado e trilha de auditoria.</h2>
+      <ul class="contact-list">
+        <li>
+          <a href="mailto:suporte@sgsseguranca.com.br">suporte@sgsseguranca.com.br</a>
+        </li>
+        <li>
+          <a href="mailto:privacidade@sgsseguranca.com.br">privacidade@sgsseguranca.com.br</a>
+        </li>
+        <li>
+          <a href="mailto:dpo@sgsseguranca.com.br">dpo@sgsseguranca.com.br</a>
+        </li>
+      </ul>
     </div>
 
-    <div class="security-stage" data-security-stage>
+    <div class="security-stage reveal" data-security-stage>
       {
         securityPoints.slice(0, 2).map((s, i) => (
           <article class={`sec-card sec-${i}`} data-spotlight>

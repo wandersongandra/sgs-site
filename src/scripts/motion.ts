@@ -7,15 +7,9 @@ function prefersReduced() {
 
 function initNav() {
   const header = document.querySelector<HTMLElement>('[data-header]');
-  const hero = document.querySelector<HTMLElement>('[data-hero]');
   const onScrollHeader = () => {
     if (!header) return;
-    const y = window.scrollY;
-    header.classList.toggle('is-scrolled', y > 8);
-    if (hero) {
-      const past = y > hero.offsetHeight - 80;
-      header.classList.toggle('is-solid', past);
-    }
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
   };
   onScrollHeader();
   window.addEventListener('scroll', onScrollHeader, { passive: true });

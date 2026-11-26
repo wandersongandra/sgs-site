@@ -1,33 +1,10 @@
 /** Conteúdo derivado apenas do repositório sgsseguranca / app em produção. */
 
-export const audiences = [
-  {
-    title: 'Gestores',
-    text: 'Acompanhe conformidade e pendências em um painel único, sem controlar tudo em planilha.',
-  },
-  {
-    title: 'Técnicos de segurança',
-    text: 'Registre APR, PT, checklists e evidências no celular, inclusive nos módulos que funcionam offline.',
-  },
-  {
-    title: 'Administradores',
-    text: 'Organize empresas, unidades, usuários e permissões com isolamento entre clientes.',
-  },
-  {
-    title: 'Auditores',
-    text: 'Consulte histórico, documentos versionados e verificação de autenticidade.',
-  },
-  {
-    title: 'Equipes operacionais',
-    text: 'Participe do diálogo diário, do início do dia e das pendências da obra ou planta.',
-  },
-] as const;
-
 export const moduleGroups = [
   {
     id: 'campo',
     title: 'Campo e operação',
-    lead: 'O que acontece na frente de trabalho, com aprovação e evidências.',
+    lead: 'Registros da frente de trabalho, com aprovação e evidências.',
     mockLabel: 'Rotina de campo',
     items: [
       {
@@ -71,7 +48,7 @@ export const moduleGroups = [
   {
     id: 'gestao',
     title: 'Gestão e conformidade',
-    lead: 'Quando algo foge do padrão, o ciclo fecha com responsável e prazo.',
+    lead: 'Não conformidades, auditorias, ações corretivas e CAT.',
     mockLabel: 'Tratativas',
     items: [
       {
@@ -103,7 +80,7 @@ export const moduleGroups = [
   {
     id: 'saude',
     title: 'Saúde ocupacional',
-    lead: 'Obrigações de pessoas com vencimentos sob controle.',
+    lead: 'Treinamentos, exames, EPI e calendário, com controle de vencimento.',
     mockLabel: 'Pessoas',
     items: [
       {
@@ -135,7 +112,7 @@ export const moduleGroups = [
   {
     id: 'docs',
     title: 'Controle de documentos',
-    lead: 'PDFs com versionamento, assinatura e verificação pública.',
+    lead: 'Documentos com versão, assinatura e página pública de verificação.',
     mockLabel: 'Documentos',
     items: [
       {
@@ -167,7 +144,7 @@ export const moduleGroups = [
   {
     id: 'relatorios',
     title: 'Relatórios e indicadores',
-    lead: 'Do registro na obra ao painel de quem decide.',
+    lead: 'Relatórios, RDO, evidências fotográficas e indicadores.',
     mockLabel: 'Indicadores',
     items: [
       {
@@ -198,21 +175,6 @@ export const moduleGroups = [
   },
 ] as const;
 
-export const offlineCaps = [
-  {
-    name: 'APR, PT, checklists e não conformidades',
-    status: 'Dá para ler e registrar sem internet; sincroniza depois.',
-  },
-  {
-    name: 'ARR, início do dia e unidades',
-    status: 'Consulta do que já estiver no aparelho.',
-  },
-  {
-    name: 'DDS, RDO, treinamentos e exames',
-    status: 'Precisam de conexão com o servidor.',
-  },
-] as const;
-
 export const journeySteps = [
   {
     n: '01',
@@ -227,7 +189,7 @@ export const journeySteps = [
   {
     n: '03',
     title: 'Acompanha no painel',
-    text: 'Gestores veem pendências e conformidade sem montar planilha na mão.',
+    text: 'O gestor acompanha pendências e conformidade no painel.',
   },
 ] as const;
 
@@ -235,7 +197,6 @@ export const sophieTasks = [
   'Análise de APR e PT',
   'Sugestão de DDS',
   'Leitura de checklists',
-  'Insights da operação',
   'Apoio a relatório fotográfico',
   'Chat com dados do sistema',
 ] as const;
@@ -259,12 +220,12 @@ export const securityPoints = [
     text: 'Consultas, arquivos e relatórios ficam isolados entre empresas. O banco reforça esse limite.',
   },
   {
-    title: 'LGPD no dia a dia',
-    text: 'Dados pessoais só o necessário. Informações de saúde com acesso restrito.',
+    title: 'Proteção de dados',
+    text: 'Dados pessoais apenas o necessário. Informações de saúde com acesso restrito, em linha com a LGPD.',
   },
   {
     title: 'Acesso protegido',
-    text: 'Login com verificação em duas etapas, sessões rastreáveis e permissões por função.',
+    text: 'Login com verificação em duas etapas e permissões por função. As sessões são rastreáveis.',
   },
   {
     title: 'Trilha de auditoria',
@@ -283,7 +244,7 @@ export const faqs = [
   },
   {
     q: 'O que é a Sophie?',
-    a: 'Sophie é a assistência de IA do SGS. Ela ajuda a analisar APR e PT, sugerir DDS, ler checklists e conversar com dados da sua empresa, com controle de acesso e cuidado com informações sensíveis.',
+    a: 'Sophie é a assistência de IA do SGS. Analisa APR e PT, sugere DDS, lê checklists e consulta dados da empresa, com controle de acesso.',
   },
   {
     q: 'Como funciona a verificação de documentos?',
@@ -299,17 +260,3 @@ export const faqs = [
   },
 ] as const;
 
-export const valuePoints = [
-  {
-    title: 'Campo e escritório no mesmo fluxo',
-    text: 'Do checklist na obra ao PDF assinado e ao indicador no painel, sem retrabalho.',
-  },
-  {
-    title: 'Conformidade com evidência',
-    text: 'Aprovações, anexos, fotos e histórico sustentam a decisão e a fiscalização.',
-  },
-  {
-    title: 'Várias empresas, cada uma isolada',
-    text: 'Pensado para operar clientes e unidades com permissões claras e escala.',
-  },
-] as const;

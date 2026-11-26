@@ -16,9 +16,9 @@ for (const bt of [chromium,firefox,webkit]){
     p.on('pageerror',e=>errs.push('pageerror '+e.message));
     await p.goto(BASE,{waitUntil:'load'}); await p.waitForTimeout(2500);
     const secs=[]; 
-    for(const id of ['topo','produto','modulos','jornada','campo','sophie','seguranca','faq','contato']){
+    for(const id of ['topo','modulos','jornada','sophie','seguranca','faq','contato']){
       await p.evaluate(id=>{const e=document.getElementById(id);scrollTo(0,e.getBoundingClientRect().top+scrollY)},id); await p.waitForTimeout(350);
-      const o=await ovf(p); secs.push(o.ok); if(['topo','jornada','seguranca','contato','produto'].includes(id)&&[1440,1280,390,360].includes(w)) R.overflow.push({b:bt.name(),w,id,...o});
+      const o=await ovf(p); secs.push(o.ok); if(['topo','modulos','jornada','seguranca','contato'].includes(id)&&[1440,1280,390,360].includes(w)) R.overflow.push({b:bt.name(),w,id,...o});
     }
     await p.evaluate(()=>scrollTo(0,document.body.scrollHeight)); await p.waitForTimeout(400);
     const pre=await p.evaluate(()=>{const e=document.querySelector('.preloader');return e?getComputedStyle(e).visibility:'none'});
@@ -63,23 +63,23 @@ for(const [w,h] of [[1440,900],[390,844]]){
  k.cursorOnAfterMouse=await q.evaluate(()=>document.documentElement.classList.contains('cursor-on'));
  await c2.close();
  const c3=await b.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});const r3=await c3.newPage();await r3.goto(BASE);await r3.waitForTimeout(1500);
- k.reducedMotion=await r3.evaluate(()=>({nativeCursor:getComputedStyle(document.body).cursor,cursorOn:document.documentElement.classList.contains('cursor-on'),lenis:document.documentElement.classList.contains('lenis'),preloader:getComputedStyle(document.querySelector('.preloader')).visibility}));
+ k.reducedMotion=await r3.evaluate(()=>({nativeCursor:getComputedStyle(document.body).cursor,cursorOn:document.documentElement.classList.contains('cursor-on'),lenis:document.documentElement.classList.contains('lenis'),preloader:(()=>{const e=document.querySelector('.preloader');return e?getComputedStyle(e).visibility:'none';})()}));
  await c3.close(); R.keyboard=k;}
 // JS disabled
 for(const [w,h] of [[1440,900],[390,844]]){const ctx=await b.newContext({viewport:{width:w,height:h},javaScriptEnabled:false});const p=await ctx.newPage();await p.goto(BASE);await p.waitForTimeout(500);
- R.nojs[w]=await p.evaluate(()=>({preloaderDisplay:getComputedStyle(document.querySelector('.preloader')).display,hiddenReveals:[...document.querySelectorAll('.reveal')].filter(e=>getComputedStyle(e).opacity!=='1').length,h1:document.querySelector('h1').innerText.replace(/\s+/g,' '),cursor:getComputedStyle(document.body).cursor}));
+ R.nojs[w]=await p.evaluate(()=>({preloaderDisplay:(()=>{const e=document.querySelector('.preloader');return e?getComputedStyle(e).display:'none';})(),hiddenReveals:[...document.querySelectorAll('.reveal')].filter(e=>getComputedStyle(e).opacity!=='1').length,h1:document.querySelector('h1').innerText.replace(/\s+/g,' '),cursor:getComputedStyle(document.body).cursor}));
  await p.screenshot({path:`${OUT}/nojs-${w}.png`});await p.evaluate(()=>scrollTo(0,3000));await p.screenshot({path:`${OUT}/nojs-${w}-mid.png`});await ctx.close();}
 // slow 3G: block the JS bundle entirely and also throttle
 {const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();
  await p.route('**/_astro/*.js',r=>r.abort());
  await p.goto(BASE,{waitUntil:'domcontentloaded'});
- const t0=Date.now(); await p.waitForFunction(()=>getComputedStyle(document.querySelector('.preloader')).visibility==='hidden'&&[...document.querySelectorAll('.reveal')].every(e=>getComputedStyle(e).opacity==='1'),null,{timeout:15000}).catch(()=>{});
- R.slow3g.jsBlocked={contentVisibleAfterMs:Date.now()-t0,ok:await p.evaluate(()=>getComputedStyle(document.querySelector('.preloader')).visibility==='hidden')};
+ const t0=Date.now(); await p.waitForFunction(()=>{const pre=document.querySelector('.preloader');const preOk=!pre||getComputedStyle(pre).visibility==='hidden'||getComputedStyle(pre).display==='none';return preOk&&[...document.querySelectorAll('.reveal')].every(e=>getComputedStyle(e).opacity==='1');},null,{timeout:15000}).catch(()=>{});
+ R.slow3g.jsBlocked={contentVisibleAfterMs:Date.now()-t0,ok:await p.evaluate(()=>{const pre=document.querySelector('.preloader');return !pre||getComputedStyle(pre).visibility==='hidden'||getComputedStyle(pre).display==='none';})};
  await p.screenshot({path:`${OUT}/jsblocked-390.png`});await ctx.close();
  const c2=await b.newContext({viewport:{width:390,height:844}});const q=await c2.newPage();const cdp=await c2.newCDPSession(q);
  await cdp.send('Network.enable');await cdp.send('Network.emulateNetworkConditions',{offline:false,latency:400,downloadThroughput:500*1024/8,uploadThroughput:500*1024/8});
  const t1=Date.now();await q.goto(BASE,{waitUntil:'domcontentloaded'});
- await q.waitForFunction(()=>getComputedStyle(document.querySelector('.preloader')).visibility==='hidden',null,{timeout:30000}).catch(()=>{});
+ await q.waitForFunction(()=>{const pre=document.querySelector('.preloader');return !pre||getComputedStyle(pre).visibility==='hidden'||getComputedStyle(pre).display==='none';},null,{timeout:30000}).catch(()=>{});
  R.slow3g.throttled={preloaderGoneAfterMs:Date.now()-t1};await c2.close();}
 // links
 {const ctx=await b.newContext();const p=await ctx.newPage();await p.goto(BASE);
@@ -95,5 +95,5 @@ for(const [w,h] of [[1440,900],[390,844]]){const ctx=await b.newContext({viewpor
  await ctx.close();}
 await b.close();
 await writeFile(OUT+'/qa-prod.json',JSON.stringify(R,null,2));
-const g=R.overflow.filter(o=>o.b==='chromium'&&['topo','jornada','seguranca','contato','produto'].includes(o.id));
+const g=R.overflow.filter(o=>o.b==='chromium'&&['topo','modulos','jornada','seguranca','contato'].includes(o.id));
 console.log(JSON.stringify({gateChromium:`${g.filter(o=>o.ok).length}/${g.length}`,overflowAllBrowsers:R.overflow.every(o=>o.ok),errors:R.errors,axe:R.axe,notfound:R.notfound,keyboard:R.keyboard,nojs:R.nojs,slow3g:R.slow3g,links:R.links,browsers:Object.fromEntries(Object.entries(R.browsers).map(([k,v])=>[k,typeof v==='string'?v:Object.fromEntries(Object.entries(v).map(([w,x])=>[w,x.allSectionsNoOverflow&&x.preloaderHidden&&!x.errors.length]))]))},null,1));

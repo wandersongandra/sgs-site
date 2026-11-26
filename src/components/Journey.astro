@@ -5,9 +5,8 @@ import { journeySteps } from '../data/content';
 <section class="section section-dark journey" id="jornada" aria-labelledby="jornada-title">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">Do campo ao painel</p>
-      <h2 id="jornada-title">Uma história simples: registrar, assinar, evidenciar e acompanhar.</h2>
-      <p>Role para ver o caminho que o registro faz dentro do SGS.</p>
+      <h2 id="jornada-title">Do campo ao painel, o registro não se perde.</h2>
+      <p>O técnico registra no celular. A assinatura fica no documento. A evidência chega à auditoria. O gestor acompanha no painel.</p>
     </div>
 
     <div class="journey-pin" data-journey>
@@ -16,7 +15,7 @@ import { journeySteps } from '../data/content';
       </div>
 
       <div class="journey-steps" data-journey-steps>
-        <p class="journey-kicker">Do campo ao painel</p>
+        <p class="journey-kicker">O caminho do registro</p>
         {
           journeySteps.map((step, i) => (
             <article class:list={['journey-step', i === 0 && 'is-active']} data-journey-step={i}>
@@ -95,11 +94,11 @@ import { journeySteps } from '../data/content';
         <!-- 3: Indicators chart -->
         <div class="journey-frame" data-journey-frame="3">
           <div class="jf-chart-card">
-            <div class="jf-card-head">Indicadores do período</div>
+            <div class="jf-card-head">Painel do gestor</div>
             <div class="jf-kpis">
-              <div><strong>96%</strong><span>Checklists em dia</span></div>
-              <div><strong>4</strong><span>APRs abertas</span></div>
-              <div><strong>2</strong><span>NCs em tratativa</span></div>
+              <div><strong>Checklists</strong><span>Em dia no painel</span></div>
+              <div><strong>APR</strong><span>Aguardando aprovação</span></div>
+              <div><strong>NC</strong><span>Em tratativa</span></div>
             </div>
             <div class="jf-bars">
               <span style="--h:72%"></span>

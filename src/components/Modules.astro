@@ -12,14 +12,14 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
   gestao: [
     { title: 'NC · Guarda-corpo', status: 'Em tratativa', tone: 'warn' },
     { title: 'Auditoria interna', status: 'Agendada', tone: 'sync' },
-    { title: 'Ação corretiva #18', status: 'No prazo', tone: 'ok' },
+    { title: 'Ação corretiva', status: 'No prazo', tone: 'ok' },
     { title: 'CAT registrada', status: 'Arquivada', tone: 'ok' },
   ],
   saude: [
-    { title: 'Treinamento NR-35', status: 'Vence em 12d', tone: 'warn' },
+    { title: 'Treinamento NR-35', status: 'A vencer', tone: 'warn' },
     { title: 'Exame periódico', status: 'Em dia', tone: 'ok' },
     { title: 'EPI · Capacete', status: 'Entregue', tone: 'ok' },
-    { title: 'Calendário SST', status: '3 eventos', tone: 'sync' },
+    { title: 'Calendário SST', status: 'No mês', tone: 'sync' },
   ],
   docs: [
     { title: 'PT assinada.pdf', status: 'v2', tone: 'ok' },
@@ -28,10 +28,10 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
     { title: 'Importação assistida', status: 'Pronta', tone: 'sync' },
   ],
   relatorios: [
-    { title: 'Conformidade', status: '96%', tone: 'ok' },
-    { title: 'Relatório fotográfico', status: '12 fotos', tone: 'sync' },
+    { title: 'Conformidade', status: 'No painel', tone: 'ok' },
+    { title: 'Relatório fotográfico', status: 'Do campo', tone: 'sync' },
     { title: 'RDO · Ontem', status: 'Enviado', tone: 'ok' },
-    { title: 'Pendências abertas', status: '4', tone: 'warn' },
+    { title: 'Pendências abertas', status: 'Em aberto', tone: 'warn' },
   ],
 };
 ---
@@ -39,9 +39,8 @@ const mockRows: Record<string, { title: string; status: string; tone: string }[]
 <section class="section section-soft" id="modulos" aria-labelledby="modulos-title">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">Módulos</p>
-      <h2 id="modulos-title">Tudo que a operação de segurança precisa, no mesmo sistema.</h2>
-      <p>Escolha uma área e veja o que o SGS cobre em cada etapa do trabalho.</p>
+      <h2 id="modulos-title">APR, PT, checklist, documento, treinamento e indicador, no mesmo sistema.</h2>
+      <p>Escolha uma área para ver o que o SGS cobre em cada etapa do trabalho.</p>
     </div>
 
     <div class="modules-pin" data-modules-pin>

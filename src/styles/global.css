@@ -2855,3 +2855,16 @@ main,
   }
 }
 
+
+/* Pass 1: header overlays the dark hero instead of sitting on a white strip */
+.site-header.header-over-hero { margin-bottom: -4.25rem; }
+/* Pass 1: module tabs in one scrollable row so the indicator never covers a second row */
+.mod-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.mod-tabs::-webkit-scrollbar { display: none; }
+.mod-tab { white-space: nowrap; flex: 0 0 auto; }
+@media (max-width: 720px) {
+  .mod-tabs { border-radius: 999px; width: 100%; }
+}
+/* Pass 1: with reduced motion the shield is shown drawn, not left invisible */
+.reduce-motion .shield-outline, .reduce-motion .shield-lock,
+.reduce-motion .shield-lock-body, .reduce-motion .shield-check { stroke-dashoffset: 0; }

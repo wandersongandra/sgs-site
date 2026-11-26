@@ -4,7 +4,7 @@ import { securityPoints } from '../data/content';
 
 <section class="section security-section" id="seguranca" aria-labelledby="seguranca-title">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Confiança</p>
       <h2 id="seguranca-title">Segurança e privacidade no desenho do produto.</h2>
       <p>
@@ -13,7 +13,7 @@ import { securityPoints } from '../data/content';
       </p>
     </div>
 
-    <div class="security-stage" data-security-stage>
+    <div class="security-stage reveal" data-security-stage>
       {
         securityPoints.slice(0, 2).map((s, i) => (
           <article class={`sec-card sec-${i}`} data-spotlight>

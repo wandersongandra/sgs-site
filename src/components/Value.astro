@@ -10,18 +10,18 @@ const icons = [
 
 <section class="section editorial" id="produto" aria-labelledby="produto-title" data-editorial>
   <div class="container">
-    <p class="eyebrow">Por que o SGS</p>
+    <p class="eyebrow reveal">Por que o SGS</p>
     <h2 id="produto-title" class="display-statement" data-word-scrub>
       <span data-word>Menos</span>{' '}<span data-word>planilha.</span>{' '}<span data-word>Mais</span>{' '}<span data-word>evidência.</span>
     </h2>
-    <p class="editorial-lede">
+    <p class="editorial-lede reveal">
       Um sistema para empresas que precisam provar conformidade sem perder o ritmo da operação.
     </p>
 
     <div class="editorial-points">
       {
         valuePoints.map((item, i) => (
-          <article class="editorial-point" data-spotlight>
+          <article class="editorial-point reveal" data-spotlight>
             <div class="ep-top">
               <span class="ep-num">0{i + 1}</span>
               <span class="ep-icon" set:html={icons[i]} />

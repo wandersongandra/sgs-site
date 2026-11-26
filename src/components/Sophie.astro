@@ -3,28 +3,26 @@ import { sophieTasks, sophieChat } from '../data/content';
 ---
 
 <section class="section" id="sophie" aria-labelledby="sophie-title">
-  <div class="container">
-    <div class="sophie-grid">
-      <div class="reveal">
-        <div class="section-head">
-          <h2 id="sophie-title">Sophie, assistência de IA do SGS</h2>
-        </div>
-        <p class="lede">
-          Analisa APR e PT e consulta os dados da empresa, com controle de acesso. Também sugere DDS e lê checklists.
-        </p>
-        <ul class="sophie-tasks" aria-label="O que a Sophie faz">
-          {sophieTasks.map((t) => <li>{t}</li>)}
-        </ul>
+  <div class="container sophie-grid">
+    <div class="sophie-copy reveal">
+      <div class="section-head">
+        <h2 id="sophie-title">Sophie, a assistência de IA do SGS</h2>
       </div>
+      <p class="lede">
+        Analisa APR e PT e consulta os dados da empresa, com controle de acesso. Também sugere DDS e lê checklists.
+      </p>
+      <ul class="sophie-tasks" aria-label="O que a Sophie faz">
+        {sophieTasks.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
 
-      <div class="chat reveal" aria-label="Demonstração ilustrativa de conversa">
-        <p class="chat-note">Exemplo ilustrativo, sem dados de cliente.</p>
-        {
-          sophieChat.map((m) => (
-            <div class={`chat-bubble ${m.role}`}>{m.text}</div>
-          ))
-        }
-      </div>
+    <div class="chat reveal" aria-label="Demonstração ilustrativa de conversa">
+      <p class="chat-note">Exemplo ilustrativo, sem dados de cliente.</p>
+      {
+        sophieChat.map((m) => (
+          <div class={`chat-bubble ${m.role}`}>{m.text}</div>
+        ))
+      }
     </div>
   </div>
 </section>

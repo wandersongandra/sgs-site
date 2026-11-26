@@ -3,14 +3,14 @@ import { site, whatsappUrl } from '../config';
 import WaIcon from './WaIcon.astro';
 ---
 
-<section class="section contact-block" id="contato" aria-labelledby="cta-title">
+<section class="section theme-navy contact-block" id="contato" aria-labelledby="cta-title">
   <div class="container">
-    <h2 id="cta-title" class="reveal">Fale sobre a sua operação</h2>
+    <h2 id="cta-title" class="reveal">Fale da sua operação.</h2>
     <p class="lede reveal">
       WhatsApp {site.whatsappDisplay}.
     </p>
     <div class="contact-actions reveal">
-      <a class="btn btn-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+      <a class="btn btn-invert" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
         <WaIcon />
         Falar no WhatsApp
       </a>

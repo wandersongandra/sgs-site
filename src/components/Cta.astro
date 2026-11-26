@@ -3,23 +3,19 @@ import { site, whatsappUrl } from '../config';
 import WaIcon from './WaIcon.astro';
 ---
 
-<section class="cta-bleed" id="contato" aria-labelledby="cta-title">
-  <div class="cta-bleed-bg" aria-hidden="true"></div>
-  <div class="container cta-bleed-inner">
-    <p class="eyebrow eyebrow-on-dark reveal">Próximo passo</p>
-    <h2 id="cta-title" class="display-cta reveal">
-      Quer ver o SGS<br />na sua operação?
-    </h2>
-    <p class="cta-lede reveal">
-      Fale conosco no WhatsApp {site.whatsappDisplay}. {site.plansLabel}.
+<section class="section contact-block" id="contato" aria-labelledby="cta-title">
+  <div class="container">
+    <h2 id="cta-title" class="reveal">Fale sobre a sua operação</h2>
+    <p class="lede reveal">
+      WhatsApp {site.whatsappDisplay}.
     </p>
-    <div class="hero-actions reveal">
-      <a class="btn btn-light btn-xl" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+    <div class="contact-actions reveal">
+      <a class="btn btn-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
         <WaIcon />
-        Abrir WhatsApp
+        Falar no WhatsApp
       </a>
-      <a class="btn btn-ghost-on-dark" href={site.appLoginUrl} target="_blank" rel="noopener noreferrer">
-        Já sou cliente
+      <a class="btn btn-secondary" href={site.appLoginUrl} target="_blank" rel="noopener noreferrer">
+        Acessar o sistema
       </a>
     </div>
   </div>

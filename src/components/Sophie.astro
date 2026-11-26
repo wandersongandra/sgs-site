@@ -2,34 +2,26 @@
 import { sophieTasks, sophieChat } from '../data/content';
 ---
 
-<section class="section section-soft" id="sophie" aria-labelledby="sophie-title">
+<section class="section" id="sophie" aria-labelledby="sophie-title">
   <div class="container">
-    <div class="section-head reveal">
-      <p class="eyebrow">Sophie IA</p>
-      <h2 id="sophie-title">Sophie, a assistência de IA do SGS.</h2>
-      <p>
-        Ajuda a analisar APR e PT, sugerir DDS, ler checklists e consultar dados da empresa, com controle de acesso.
-      </p>
-    </div>
-
     <div class="sophie-grid">
-      <div class="sophie-intro reveal">
-        <img src="/sophie-avatar.svg" alt="" width="72" height="72" />
-        <div>
-          <h3 style="font-size:1.35rem; margin-bottom:0.4rem;">Sophie</h3>
-          <p style="margin:0; color: var(--ink-muted);">
-            Exemplos ilustrativos do tipo de ajuda que ela oferece no sistema.
-          </p>
-          <div class="tag-cloud" aria-label="Capacidades da Sophie">
-            {sophieTasks.map((t) => <span class="pill">{t}</span>)}
-          </div>
+      <div class="reveal">
+        <div class="section-head">
+          <h2 id="sophie-title">Sophie, assistência de IA do SGS</h2>
         </div>
+        <p class="lede">
+          Analisa APR e PT e consulta os dados da empresa, com controle de acesso. Também sugere DDS e lê checklists.
+        </p>
+        <ul class="sophie-tasks" aria-label="O que a Sophie faz">
+          {sophieTasks.map((t) => <li>{t}</li>)}
+        </ul>
       </div>
 
       <div class="chat reveal" aria-label="Demonstração ilustrativa de conversa">
+        <p class="chat-note">Exemplo ilustrativo, sem dados de cliente.</p>
         {
           sophieChat.map((m) => (
-            <div class={`chat-bubble ${m.role} is-in`}>{m.text}</div>
+            <div class={`chat-bubble ${m.role}`}>{m.text}</div>
           ))
         }
       </div>

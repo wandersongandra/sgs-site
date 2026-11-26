@@ -9,7 +9,7 @@ export const site = {
   description:
     'Sistema para gestão de Segurança e Saúde do Trabalho: análise de risco, permissão de trabalho, checklists, documentos, treinamentos, exames e indicadores — com uso em campo e Sophie IA.',
   locale: 'pt-BR',
-  url: 'https://sgsseguranca.com.br',
+  url: 'https://sgsseguranca.example.com',
   appLoginUrl: 'https://app.sgsseguranca.com.br/login',
   supportEmail: 'suporte@sgsseguranca.com.br',
   /** E.164 sem +. Número informado pelo responsável. */

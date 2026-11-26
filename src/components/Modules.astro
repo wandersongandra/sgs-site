@@ -1,5 +1,72 @@
 ---
-import { moduleGroups } from '../data/content';
+const features = [
+  {
+    name: 'APR',
+    full: 'Análise Preliminar de Risco',
+    desc: 'Itens, evidências e fluxo de aprovação antes da atividade.',
+    bar: 'APR · Trabalho em altura',
+    rows: [
+      ['Cinto de segurança', 'Conforme', 'ok'],
+      ['Ponto de ancoragem', 'Pendente', 'warn'],
+      ['Condição do clima', 'Conforme', 'ok'],
+    ],
+  },
+  {
+    name: 'PT',
+    full: 'Permissão de Trabalho',
+    desc: 'Altura, confinado, quente, eletricidade e escavação.',
+    bar: 'PT · Espaço confinado',
+    rows: [
+      ['Tipo', 'Espaço confinado', ''],
+      ['Responsável', 'Engenharia de segurança', ''],
+      ['Situação', 'Em análise', 'warn'],
+    ],
+  },
+  {
+    name: 'Checklists',
+    full: 'Checklists de campo',
+    desc: 'Modelos e execuções, com não conformidades e ações.',
+    bar: 'Checklist de EPI',
+    rows: [
+      ['Capacete', 'Conforme', 'ok'],
+      ['Luva', 'Não conforme', 'warn'],
+      ['Foto do local', 'Anexada', 'ok'],
+    ],
+  },
+  {
+    name: 'Documentos',
+    full: 'Controle de documentos',
+    desc: 'Versão, assinatura, validade e página pública de verificação.',
+    bar: 'Acervo documental',
+    rows: [
+      ['Procedimento de trabalho em altura', 'Assinado', 'ok'],
+      ['Procedimento de espaço confinado', 'Aguardando assinatura', 'warn'],
+      ['Instrução de emergência', 'Vigente', 'ok'],
+    ],
+  },
+  {
+    name: 'Treinamentos',
+    full: 'Saúde ocupacional',
+    desc: 'Treinamentos, exames e EPI, com controle de vencimento.',
+    bar: 'Obrigações de pessoas',
+    rows: [
+      ['Trabalho em altura', 'A vencer', 'warn'],
+      ['Espaço confinado', 'Em dia', 'ok'],
+      ['Exame ocupacional', 'A vencer', 'warn'],
+    ],
+  },
+  {
+    name: 'Indicadores',
+    full: 'Painel de conformidade',
+    desc: 'Pendências, não conformidades e vencimentos, no mesmo sistema.',
+    bar: 'Acompanhar no painel',
+    rows: [
+      ['Pendências de aprovação', 'Aguardando', 'warn'],
+      ['Treinamentos a vencer', 'Atenção', 'warn'],
+      ['NCs em aberto', 'Em tratativa', 'warn'],
+    ],
+  },
+] as const;
 ---
 
 <section class="section" id="modulos" aria-labelledby="modulos-title">
@@ -9,48 +76,30 @@ import { moduleGroups } from '../data/content';
       <p>Os registros da operação ficam no mesmo sistema, da frente de trabalho até a auditoria.</p>
     </div>
 
-    <div class="mod-tabs reveal" role="tablist" aria-label="Áreas do SGS" data-mod-tabs>
+    <div class="feat-grid">
       {
-        moduleGroups.map((group, i) => (
-          <button
-            class="mod-tab"
-            type="button"
-            role="tab"
-            id={`tab-${group.id}`}
-            aria-selected={i === 0 ? 'true' : 'false'}
-            aria-controls={`panel-${group.id}`}
-            data-mod-tab={group.id}
-          >
-            {group.title}
-          </button>
+        features.map((f) => (
+          <article class="feat reveal">
+            <div class="feat-copy">
+              <h3>
+                {f.name}
+                {f.full !== f.name && <span class="feat-full">{f.full}</span>}
+              </h3>
+              <p>{f.desc}</p>
+            </div>
+            <div class="feat-ui" aria-hidden="true">
+              <div class="ui-bar">{f.bar}</div>
+              {f.rows.map(([label, status, tone]) => (
+                <div class="ui-row">
+                  <span>{label}</span>
+                  <span class={tone ? `status status-${tone}` : 'status'}>{status}</span>
+                </div>
+              ))}
+            </div>
+          </article>
         ))
       }
     </div>
-
-    {
-      moduleGroups.map((group, i) => (
-        <div
-          class:list={['mod-panel', i === 0 && 'is-active']}
-          role="tabpanel"
-          id={`panel-${group.id}`}
-          aria-labelledby={`tab-${group.id}`}
-          data-mod-panel={group.id}
-          hidden={i !== 0}
-        >
-          <p class="mod-lead">{group.lead}</p>
-          <ul class="mod-list">
-            {group.items.map((item) => (
-              <li>
-                <div>
-                  <strong>{item.name}</strong>
-                  {item.full !== item.name && <span class="full">{item.full}</span>}
-                </div>
-                <p>{item.desc}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
+    <p class="feat-note reveal">Exemplos de interface, sem dados de cliente.</p>
   </div>
 </section>

@@ -4,28 +4,34 @@ import WaIcon from './WaIcon.astro';
 ---
 
 <section class="hero" id="topo" data-hero aria-labelledby="hero-title">
-  <div class="container hero-grid">
-    <h1 id="hero-title">
-      <span class="h-line">A evidência feita no campo </span>
-      <span class="h-line">tem de chegar intacta </span>
-      <span class="h-line">à auditoria.</span>
-    </h1>
-    <div class="hero-copy">
-      <p class="lede">
-        Papel some. Assinatura fica na prancheta. Planilha não guarda o rastro que a fiscalização pede. No SGS, o técnico registra APR, PT e checklist no celular; o gestor acompanha pendências, documentos e conformidade no painel.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
-          <WaIcon />
-          Falar no WhatsApp
-        </a>
+  <div class="container">
+    <div class="hero-intro">
+      <h1 id="hero-title">
+        <span class="h-line">A evidência feita no campo </span>
+        <span class="h-line">tem de chegar intacta </span>
+        <span class="h-line">à auditoria.</span>
+      </h1>
+      <div class="hero-lead">
+        <div class="hero-copy">
+        <p class="lede">
+          Papel some. Assinatura fica na prancheta. Planilha não guarda o rastro que a fiscalização pede. No SGS, o técnico registra APR, PT e checklist no celular; o gestor acompanha pendências, documentos e conformidade no painel.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            <WaIcon />
+            Falar no WhatsApp
+          </a>
+        </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <figure class="hero-figure">
-      <div class="app-frame" aria-hidden="true" data-parallax>
+  <div class="hero-stage">
+    <div class="container stage-inner">
+      <div class="app-frame stage-desktop" aria-hidden="true" data-parallax>
         <div class="app-chrome">app.sgsseguranca.com.br</div>
-        <div class="app-shell">
+        <div class="app-shell-3">
           <div class="app-side">
             <span class="is-current">Pendências</span>
             <span>Campo</span>
@@ -34,7 +40,7 @@ import WaIcon from './WaIcon.astro';
           </div>
           <div class="app-main">
             <div class="app-toolbar">Pendências</div>
-            <div class="app-row">
+            <div class="app-row is-sel">
               <div>
                 <strong>APR · Trabalho em altura</strong>
                 <div class="meta">Aguardando aprovação</div>
@@ -63,9 +69,55 @@ import WaIcon from './WaIcon.astro';
               <span class="status status-ok">Publicado</span>
             </div>
           </div>
+          <div class="app-detail">
+            <h3>APR · Trabalho em altura</h3>
+            <p class="meta">Aguardando aprovação</p>
+            <dl class="dl-mini">
+              <div>
+                <dt>Atividade</dt>
+                <dd>Manutenção em cobertura</dd>
+              </div>
+              <div>
+                <dt>Evidência</dt>
+                <dd>Foto anexada no campo</dd>
+              </div>
+              <div>
+                <dt>Aprovação</dt>
+                <dd>Pendente do responsável</dd>
+              </div>
+              <div>
+                <dt>Rastro</dt>
+                <dd>Fica no registro, após a assinatura</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </div>
-      <figcaption>Exemplo de interface, sem dados de cliente.</figcaption>
-    </figure>
+
+      <div class="phone-frame stage-phone" aria-hidden="true" data-parallax-slow>
+        <div class="phone-bar">Checklist de EPI</div>
+        <div class="phone-item">
+          <strong>Capacete</strong>
+          <span class="status status-ok">Conforme</span>
+        </div>
+        <div class="phone-item">
+          <strong>Cinto de segurança</strong>
+          <span class="status status-ok">Conforme</span>
+        </div>
+        <div class="phone-item">
+          <strong>Luva de vaqueta</strong>
+          <span class="status status-warn">Pendente</span>
+        </div>
+        <div class="phone-item">
+          <strong>Bota de segurança</strong>
+          <span class="status status-ok">Conforme</span>
+        </div>
+        <div class="phone-item">
+          <strong>Foto do local</strong>
+          <span class="status status-ok">Anexada</span>
+        </div>
+      </div>
+    </div>
   </div>
+  <p class="container stage-cap">Exemplo de interface, sem dados de cliente.</p>
 </section>

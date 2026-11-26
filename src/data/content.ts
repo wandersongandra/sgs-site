@@ -3,11 +3,11 @@
 export const audiences = [
   {
     title: 'Gestores',
-    text: 'Acompanhe conformidade e pendências em um painel único, sem chasing de planilha.',
+    text: 'Acompanhe conformidade e pendências em um painel único, sem controlar tudo em planilha.',
   },
   {
     title: 'Técnicos de segurança',
-    text: 'Registre APR, PT, checklists e evidências no celular, com apoio mesmo sem internet nos módulos preparados.',
+    text: 'Registre APR, PT, checklists e evidências no celular, inclusive nos módulos que funcionam offline.',
   },
   {
     title: 'Administradores',

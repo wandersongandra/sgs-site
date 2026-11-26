@@ -2,16 +2,14 @@
 import { site, whatsappUrl } from '../config';
 ---
 
-<footer class="site-footer footer-v4">
+<footer class="site-footer">
   <div class="container footer-grid">
     <div>
       <a class="brand" href="#topo">
-        <img src="/logo-sgs-mark.svg" alt="" width="36" height="36" />
+        <img src="/logo-sgs-mark.svg" alt="" width="28" height="28" />
         <span>{site.name}</span>
       </a>
-      <p>
-        Sistema de gestão de Segurança e Saúde do Trabalho para operação, conformidade e evidências.
-      </p>
+      <p>Sistema de gestão de Segurança e Saúde do Trabalho.</p>
     </div>
     <div>
       <strong>Contato</strong>
@@ -28,24 +26,24 @@ import { site, whatsappUrl } from '../config';
           <a href="mailto:privacidade@sgsseguranca.com.br">privacidade@sgsseguranca.com.br</a>
         </li>
         <li>
+          <a href="mailto:dpo@sgsseguranca.com.br">dpo@sgsseguranca.com.br</a>
+        </li>
+        <li>
           <a href={site.appLoginUrl} target="_blank" rel="noopener noreferrer">Acessar o sistema</a>
         </li>
       </ul>
     </div>
     <div>
-      <strong>Navegação</strong>
+      <strong>Páginas</strong>
       <ul>
         <li><a href="#modulos">Módulos</a></li>
         <li><a href="#jornada">Como funciona</a></li>
-        <li><a href="#sophie">Sophie IA</a></li>
+        <li><a href="#sophie">Sophie</a></li>
         <li><a href="#faq">Perguntas frequentes</a></li>
-        <li><span>{site.plansLabel}</span></li>
       </ul>
     </div>
   </div>
   <div class="container legal-note">
-    <p>
-      © {new Date().getFullYear()} {site.name}.
-    </p>
+    <p>© {new Date().getFullYear()} {site.name}.</p>
   </div>
 </footer>
